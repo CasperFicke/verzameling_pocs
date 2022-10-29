@@ -1,0 +1,17 @@
+<!-- templates/includes/blogpost.html -->
+
+<li>
+  <article class="post">
+    <a href="{% url 'show-blogpost' blogpost.pk %}">{{ blogpost.title }}</a>
+    - {{ blogpost.author.first_name }} {{ blogpost.author.last_name }}
+    - {{ blogpost.post_date }}
+    {% if user.is_authenticated and blogpost.author.id == user.id %}
+      - <a href="{% url 'edit-blogpost' blogpost.pk %}">(Edit)</a>
+      - <a href="{% url 'delete-blogpost' blogpost.pk %}">(Delete)</a>
+    {% endif %}
+    <br/>
+    {{ blogpost.snippet }}
+    <!--{{ blogpost.body|slice:":200"|safe }}...-->
+    <br/><br/>
+  </article>
+</li>

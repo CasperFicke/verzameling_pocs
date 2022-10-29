@@ -1,0 +1,9 @@
+/* domeinen/static/domeinen/css/show_domein.css */
+
+.item-row{
+	display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ececec;
+}

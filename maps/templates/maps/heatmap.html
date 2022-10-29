@@ -1,0 +1,40 @@
+<!-- maps/templates/maps/heatmap.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title|title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'maps:all-plaatsen' %}"> Plaatsen</a> / {{ title }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <hr>
+        {% for plaats in plaatsen %}
+          {% if plaats in large_cities %}
+            {{ plaats.naam|capfirst }}<br>
+          {% endif %}
+        {% endfor %}
+        <hr>
+        {% for plaats in plaatsen %}
+          {% if plaats not in large_cities %}
+            {{ plaats.naam|capfirst }}<br>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-md-10">
+        {{ map |safe }}
+      </div>
+    </div>
+    <br>
+  </div>
+{% endblock content %}

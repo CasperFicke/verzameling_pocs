@@ -1,0 +1,48 @@
+<!-- energie/all_meterstanden.html -->
+{% extends 'base.html' %}
+
+{% block title %} Meterstanden {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'energie-index' %}"> Energie</a> / {{ medium }}
+      </div>
+      <hr>
+    </div>
+    <h2>{{ medium }} meterstanden </h2>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <br/>
+    <div class="row align-items-center">  
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Meter</th>
+            <th scope="col">Medium</th>
+            <th scope="col">Datum</th>
+            <th scope="col">Stand</th>
+            <th scope="col">Opnemer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if page_obj %}   
+            {% for meterstand in page_obj %}
+              <tr>
+                <td>{{ meterstand.meter }}</td>
+                <td>{{ meterstand.meter.medium.name }}</td>
+                <td>{{ meterstand.meterstand_date }}</td>
+                <td>{{ meterstand.meterstand_waarde }} {{ meterstand.meter.eenheid }}</td>
+                <td>{{ meterstand.opnemer }}</td>
+              </tr>
+            {% endfor %} 
+          {% endif %}
+        </tbody>
+      </table>    
+      <img src="data:image/png;base64,{{ data }}" alt="" height="100" ,width="250">
+      {% include 'includes/pagina_nav.html' %}
+    </div>
+  </div>
+{% endblock content %}

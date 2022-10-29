@@ -1,0 +1,71 @@
+<!-- energie/templates/energie/energie_index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'energie/styles/energie_base.css' %}">
+{% endblock css_files%}
+
+  {% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+ 
+<div class="row mt-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Information
+      </div>
+      <div class="card-body">
+        <marquee behavior="" direction="">
+          <h3 class="my-4">This is the Information</h3>
+        </marquee>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Meters
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <a class="text-decoration-none text-dark" href="{% url 'all-meterstanden' 'water' %}">
+              <div class="card my-card shadow text-center p-3">
+                <h4>Water <i class="fas fa-faucet"></i></h4>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3">
+            <a class="text-decoration-none text-dark" href="{% url 'all-meterstanden' 'gas' %}">
+              <div class="card my-card shadow text-center p-3">
+                <h4>Gas <i class="fas fa-burn"></i></h4>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3">
+            <a class="text-decoration-none text-dark" href="{% url 'all-meterstanden' 'zonnepanelen' %}">
+              <div class="card my-card shadow text-center p-3">
+                <h4>Panelen <i class="fas fa-solar-panel"></i></h4>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3">
+            <a class="text-decoration-none text-dark" href="{% url 'all-meterstanden' 'electriciteit' %}">
+              <div class="card my-card shadow text-center p-3">
+                <h4>Electra <i class="fas fa-lightbulb"></i></h4>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Topside-->
+  </div>
+{% endblock content %}

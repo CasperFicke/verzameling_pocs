@@ -1,0 +1,50 @@
+<!-- domeinen/templates/domeinen/all_certificaten.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title|title }}
+{% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <table class="table table-striped table-sm table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Naam</th>
+          <th scope="col">Type</th>
+          <th scope="col">geldig</th>
+          <th scope="col">Geldig tot:</th>
+          <th scope="col">vervalt over</th>
+          <th scope="col">betrokkenen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if certificaat_list %}
+         {% for certificaat in page_obj %}   
+            <tr>
+              <th scope="row"><a href="{{ certificaat.get_absolute_url }}">{{ certificaat.name }}</a></th>
+              <td>{{ certificaat.type }}</td>
+              <td>{% include 'includes/vink_kruis.html' with bool_var=certificaat.valid %}</td>
+              <td>{{ certificaat.end }}</td>
+              <td>
+                {% if certificaat.valid == True %}
+                  {{certificaat.days_till_expiration}}
+                {% else %}
+                  expired
+                {% endif %}
+              </td>
+              <td>
+                {% for betrokkene in certificaat.betrokkenen.all %}
+                  {{ betrokkene.rol }}: <a href="{% url 'show-contact' betrokkene.uuid  %}">{{ betrokkene.organisatie }}  -  {{ betrokkene.name }}</a><br>
+                {% endfor %}
+              </td>   
+            </tr>
+          {% endfor %}  
+        {% endif %}
+      </tbody>
+    </table>
+    {% include 'includes/pagina_nav.html' %}
+  </div>
+{% endblock content %}

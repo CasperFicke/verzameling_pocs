@@ -1,0 +1,45 @@
+<!-- datalab/templates/datalab/all_workspaces_geoserver.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  <div class="container">
+  {% if api_result %}
+    {% if api_result == "Error..." %}
+      There was een error, please try again..
+    {% else %}
+      <div class="jumbotron teal">
+        <h1 class="display-5">Workspaces</h1>
+        <hr class="my-4">
+        <p>{{ category_description }}</p>
+      </div>
+      <div class="container">
+        <table class="table table-striped table-sm table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">name</th>
+              <th scope="col">url</th>
+            
+            </tr>
+          </thead>
+          <tbody>
+            {% if ws_lijst %}
+            {% for workspace in ws_lijst %}   
+                <tr>
+                  <th scope="row">{{ workspace.name }}</th>
+                  <td><a href="{{workspace.href }}">{{workspace.href }}</a></td>
+                </tr>
+              {% endfor %}  
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+<br>
+<br>
+{% endblock content %}

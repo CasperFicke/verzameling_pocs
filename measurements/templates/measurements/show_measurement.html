@@ -1,0 +1,37 @@
+<!-- measurements/templates/measurements/show_measurement.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title|title }}
+{% endblock title %}
+
+{% block content %}
+   <!-- ***** Breadcrumb Area Start ***** -->
+   <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'calculate-distance' %}"> Measurements</a> / afstand
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <br>
+     <dl class="row">
+            <dt class="col-sm-2">Van: </dt>
+            <dd class="col-sm-9"><a href="{% url 'show-measurement' meting.uuid %}" >{{meting.location }}</a></dd>
+            <dt class="col-sm-2">Naar:</dt>
+            <dd class="col-sm-9"><a href="{% url 'show-measurement' meting.uuid %}" >{{meting.destination }}</a></dd>
+            <dt class="col-sm-2">Afstand:</dt>
+            <dd class="col-sm-9"><a href="{% url 'show-measurement' meting.uuid %}" >{{meting.dist_km }} km / {{meting.dist_nm }} mijl</a></dd>
+            <dt class="col-sm-2">Richting:</dt>
+            <dd class="col-sm-9"><a href="{% url 'show-measurement' meting.uuid %}" >{{meting.bearing }} °</a></dd>
+          </dl>
+    {{ map|safe }}
+    <br>
+    <a href="{% url 'calculate-distance' %}" class="btn btn-secondary">Terug</a>
+    <br><br>
+  </div>
+{% endblock content %}

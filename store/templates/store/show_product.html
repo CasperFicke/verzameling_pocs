@@ -1,0 +1,44 @@
+<!-- store/templates/store/show_store.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title|title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'products' %}"> Products</a> / {{ product.name }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+      <img class="thumbnail" src="{{product.imageURL}}">
+    </div>
+    <div class="col-lg-4">
+      <div class="box-element product">
+        <h4><strong>{{product.name}}</strong></h4>
+        <h6 >categorie: {{product.category}}</h6>
+        <hr>
+        <h4 ><strong>€ {{product.price}}</strong></h4>
+        <h4 ><strong>Voorraad: {{product.aantal}}</strong></h4>
+        <h6 style="display: inline-block">Tag(s): </h6>
+        {% for tag in product.tags.all %}
+          <h6 style="display: inline-block">{{ tag.name }} , </h6>
+        {% endfor %}
+      </div>
+    </div>
+    
+    </div>
+  </div>
+    <br><br>
+   
+    <a href="{% url 'products' %}" class="btn btn-secondary">Terug</a>
+    <br><br>
+  </div>
+{% endblock content %}

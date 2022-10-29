@@ -1,0 +1,14 @@
+<!-- maps/templates/maps/unemploymentkaart.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+ 
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    {{ m |safe }}
+    <br>
+  </div>
+{% endblock content %}

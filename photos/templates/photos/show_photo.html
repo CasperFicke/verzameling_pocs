@@ -1,0 +1,40 @@
+<!-- photos/templates/photos/show_photo.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title|title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-photos' %}"> Photos</a> / {{ photo.name }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <ul>
+      <li>Naam: {{ photo.name }}</li>
+      <li>Description: {{ photo.description }}</li>
+      <li>created: {{ photo.created }}</li>
+      <li><div style="width: 600px"><img src="{{ photo.image.url }}"></div></li>
+      <br>
+    </ul>
+    <br><br>
+    {% if is_favoriet %}
+      <p>This is my favorit photo</p>
+    {% else %}
+      <form action="/photos/favoriet/" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="photo_id" value="{{ photo.id }}">
+        <button class="btn btn-secondary">Favoriet</button>
+      </form>
+    {% endif %}
+    <br>
+    <a href="{% url 'all-photos' %}" class="btn btn-secondary">Terug</a>
+    <br><br>
+  </div>
+{% endblock content %}

@@ -1,0 +1,50 @@
+<!-- events/templates/events/show_event.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+ <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all_events' %}"> Events</a> / {{ event.name }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <br>
+    <div class="card">
+      <div class="card-header">
+        <strong>{{ event.name }}</strong>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <ul>
+            <li>beschrijving: {{ event.description }}</li>
+            <li>Start datum: {{ event.event_start }}</li>
+            <li>Eind datum: {{ event.event_end }}</li>
+            <li>Venue: <a href="{% url 'show_venue' event.venue.uuid %}">{{ event.venue.name }}</a></li>
+            <li>Manager: {{ event.manager }}</li>
+          </ul>
+          <br>
+          {% if user.is_authenticated %}
+            {% if user == event.manager or user.is_superuser %}
+              <a href="{% url 'edit_event' event.id event.slug %}" class="btn btn-outline-primary">Edit</a>
+              <a href="{% url 'delete_event' event.id event.slug %}" class="btn btn-outline-danger">Delete</a>
+            {% endif %}
+            <a href="#" class="btn btn-primary">Signup</a>
+          {% else %}
+            <a  href="{% url 'login' %}?next={{request.path}}">Login</a> to sign up for this event
+          {% endif %}
+        </p>
+      </div>
+      <br>
+    </div>
+    <br>
+  </div>
+  
+{% endblock content %}

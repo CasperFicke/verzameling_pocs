@@ -1,0 +1,215 @@
+<!-- store/templates/store/checkout.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'store/styles/store_base.css' %}">
+{% endblock css_files%}
+
+{% block script_files_head %}
+  <script type="text/javascript">
+    var user = '{{ request.user }}'
+  </script>
+  <script src="{% static 'store/scripts/top_script.js' %}"></script>
+{% endblock script_files_head %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+          <form id="form">
+            {% csrf_token %}
+            <div id="user-info">
+              <div class="form-field">
+                <input required class="form-control" type="text" name="name" placeholder="Name..">
+              </div>
+              <div class="form-field">
+                <input required class="form-control" type="email" name="email" placeholder="Email..">
+              </div>
+            </div>
+            <div id="shipping-info">
+              <hr>
+              <p>Shipping Information:</p>
+              <hr>
+              <div class="form-field">
+                <input class="form-control" type="text" name="address" placeholder="Address..">
+              </div>
+              <div class="form-field">
+                <input class="form-control" type="text" name="city" placeholder="City..">
+              </div>
+              <div class="form-field">
+                <input class="form-control" type="text" name="state" placeholder="State..">
+              </div>
+              <div class="form-field">
+                <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+              </div>
+              <div class="form-field">
+                <input class="form-control" type="text" name="country" placeholder="Country..">
+              </div>
+            </div>
+            <hr>
+            <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+          </form>
+        </div>
+        <br>
+        <div class="box-element hidden" id="payment-info">
+          <small>Paypal Options</small>
+          <!--<button id="make-payment">Make payment</button>
+           Set up a container element for the button -->
+				  <div id="paypal-button-container"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="box-element">
+          <a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+          <hr>
+          <h3>Order Summary</h3>
+          <hr>
+          {% for item in items %}
+            <div class="cart-row">
+              <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+              <div style="flex:2"><p>{{item.product.name}}</p></div>
+              <div style="flex:1"><p>€ {{item.product.price|floatformat:2}}</p></div>
+              <div style="flex:1"><p>x {{item.quantity}}</p></div>
+            </div>
+          {% endfor %}
+          <h5>Items:   {{order.get_cart_items}}</h5>
+          <h5>Total:   € {{order.get_cart_total|floatformat:2}}</h5>
+        </div>
+      </div>
+    </div>
+    <br><br>
+  </div>
+  <!-- Include the PayPal JavaScript SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=Ac3DCIkc0Lsd7uLqpo384F9C7ncB4LyvKo3VqZYit6dQRiVy70KIR9NJHCshMY2GngYDK-W1os_zv69N&currency=EUR&disable-funding=card"></script>
+  <script>
+    var total = '{{ order.get_cart_total }}'
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+      style:{
+        color: 'blue',
+        shape: 'rect'
+      },
+      // Set up the transaction
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total
+            }
+          }]
+        });
+      },
+      // Finalize the transaction
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(orderData) {
+          submitFormData()
+          // Successful capture! For demo purposes:
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+          var transaction = orderData.purchase_units[0].payments.captures[0];
+          alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+          // Replace the above to show a success message within this page, e.g.
+          // const element = document.getElementById('paypal-button-container');
+          // element.innerHTML = '';
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+          // Or go to another URL:  actions.redirect('thank_you.html');
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+  <script>
+    var shipping = '{{ order.shipping }}'
+    // clear adresfields if only digital product are in the cart
+    if (shipping == 'False'){
+      document.getElementById('shipping-info').innerHTML = ''
+    }
+    // for loggedin user: wis de vraag om naam en email
+    if (user != 'AnonymousUser'){
+      document.getElementById('user-info').innerHTML = ''
+    }
+    // for loggedin user en verzenden is niet nodig; wis shipping form
+    if (user != 'AnonymousUser' && shipping == 'False'){
+      //Hide entire form if user is logged in and shipping is false
+      document.getElementById('form-wrapper').classList.add("hidden");
+      //Show payment if logged in user wants to buy an item that does not require shipping
+      document.getElementById('payment-info').classList.remove("hidden");
+   }
+    // show continuebutton (form nog in te vullen) or paymentbutton (form gesubmit)
+		var form = document.getElementById('form')
+    // get csrf token from form
+    csrftoken = form.getElementsByTagName("input")[0].value
+    console.log('new token:', form.getElementsByTagName("input")[0].value)
+    // als form wordt gesubmit (de klik op continue)
+		form.addEventListener('submit', function(e){
+	    e.preventDefault()
+	    console.log('Form Submitted...')
+      // verberg submit button
+	    document.getElementById('form-button').classList.add("hidden");
+      // presenteer payment button
+	    document.getElementById('payment-info').classList.remove("hidden");
+	  })
+    /* check of makepayment knop wordt aangeklikt
+    document.getElementById('make-payment').addEventListener('click', function(e){
+	   	submitFormData()
+	  })*/
+    // start payment
+	  function submitFormData(){
+	    console.log('Payment button clicked')
+      // maak userinfo dictionary
+      var userFormData = {
+        'name'  : null,
+        'email' : null,
+        'total' : total,
+      }
+      // maak shippinginfo dictionary
+      var shippingInfo = {
+        'address' : null,
+        'city'    : null,
+        'state'   : null,
+        'zipcode' : null,
+        'country' : null,
+      }
+      // als verzenden nodig is: neem gegevens over uit form
+      if (shipping != 'False'){
+        shippingInfo.address = form.address.value
+        shippingInfo.city    = form.city.value
+        shippingInfo.state   = form.state.value
+        shippingInfo.zipcode = form.zipcode.value
+        shippingInfo.country = form.country.value
+      }
+      // als gebruiker niet is ingelogd: neem gegevens over uit form
+      if (user == 'AnonymousUser'){
+        userFormData.name  = form.name.value
+        userFormData.email = form.email.value
+      }
+      console.log('Shipping Info:', shippingInfo)
+      console.log('User Info:'    , userFormData)
+      // send user- en shipping gegevens naar de backend
+      var url = "/store/process_order/"
+      fetch(url, {
+        method  : 'POST',
+        headers : {
+          'Content-Type': 'application/json',
+          'X-CSRFToken' : csrftoken,
+        }, 
+        body : JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+      console.log('Success:', data);
+      alert('Transaction completed');  
+      // clear cart-data
+      cart = {}
+      // reset cookie
+      document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+      // return to store homepage
+      window.location.href = "{% url 'store' %}"
+      })
+    }
+  </script>
+{% endblock content %}

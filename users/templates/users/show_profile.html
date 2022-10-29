@@ -1,0 +1,46 @@
+<!-- users/templates/users/show_profile.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} User profile {% endblock title %}
+{% block content %}
+
+  <h2>User profile</h2>
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        {% if page_user.profile_pic %}
+          <img src="{{ page_user.profile_pic.url }}" class="card-img">
+          {% else %}
+            <img src="{% static 'users/images/standard.jpg' %}" class="card-img">
+        {% endif %}
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ page_user.user.first_name }} 
+            {{ page_user.user.last_name }}
+          </h5>
+          <p class="card-text">
+            <small class="text-muted">
+              {% if page_user.website_url %}
+              <a href="{{ page_user.website_url }}">Website</a>
+              {% endif %}
+              {% if page_user.twitter_url %}
+              | <a href="{{ page_user.twitter_url }}">Twitter</a>
+              {% endif %}
+              {% if page_user.facebook_url %}
+              | <a href="{{ page_user.facebook_url }}">Facebook</a>
+              {% endif %}
+            </small>
+          </p>
+          <p class="card-text"> {{ page_user.bio }}</p>
+          <p class="card-text"> {{ page_user.country }}</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+

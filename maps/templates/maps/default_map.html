@@ -1,0 +1,232 @@
+<!-- maps/templates/maps/defaultmap.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css'/>
+  <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css'/>
+  <link rel="stylesheet" href="{% static 'maps/styles/maps.css'%}">
+{% endblock css_files %}
+
+{% block script_files_head %}
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+{% endblock script_files_head %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <div id='map' style='width: 100%; height: 400px;'></div>
+    <script>
+      var json_data = { "type": "FeatureCollection",
+        "features": [
+          { "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                5.068817138671874,
+                52.6063835896964
+              ]
+            },
+            "properties": {
+              "marker-color": "#7e7e7e",
+              "marker-size": "medium",
+              "marker-symbol": "rocket",
+            }
+          },
+          { "type": "Feature",
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [ [5, 52.6], [5.2, 52.6], [5.2, 52.7],
+                  [5, 52.7], [5, 52.6]
+                ]
+              ]
+            },
+            "properties": {
+              "prop0": "value0",
+              "prop1": {"this": "that"}
+            }
+          }
+        ]
+      }
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY2ZpY2tlIiwiYSI6ImNrbGIwYzg0ajBxa2EydnM4eXR1ZHp0dGgifQ.x9EoFA_ddcBU5HkBDGZ-eA';
+      var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [5, 52.6], // starting position
+      zoom: 6 // starting zoom
+      });
+
+      var geojsontest = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [4.032, 56.913]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'Washington, D.C.'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [3.414, 56.776]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'San Francisco, California'
+          }
+        }]
+      };
+
+      
+      map.on('load', function () {
+        map.addSource('markermeer', {
+          'type': 'geojson',
+          'data': {
+            'type': 'FeatureCollection',
+            'features': [
+              {
+                'type': 'Feature',
+                'properties': {
+                  'name': 'gebied',
+                  'description': 'belangrijk gebied'
+                },
+                'geometry': {
+                  'type': 'Polygon',
+                  'coordinates': [
+                    [
+                    [5.286827087402344, 52.58114836057113],
+                    [5.253181457519531, 52.55840335406024],
+                    [5.283737182617187, 52.53731717490098],
+                    [5.349998474121093, 52.54211986891957],
+                    [5.340728759765624, 52.57718448358695],
+                    [5.286827087402344, 52.58114836057113]
+                    ]
+                  ]
+                }
+              },
+              {
+                "type": "Boei",
+                "properties": {
+                  "name": "boei 1",
+                  "description": "bovenboei"
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [5.12237548828125, 52.60221348003281]
+                }
+              },
+              {
+                "type": "Boei",
+                "properties": {
+                  "name": "boei 2",
+                  "description": "gijp-boei"
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [5.077056884765625, 52.55965567958739]
+                }
+              },
+              {
+                "type": "Boei",
+                "properties": {
+                  "name": "boei 3",
+                  "description": "onderboei"
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [5.200653076171875, 52.57801901378955]
+                }
+              },
+              {
+                "type": "Circel",
+                "properties": {
+                  "name": "Wedstrijdgebied_1",
+                  "description": "Wedstrijdgebied baan 1",
+                  'radius': '100'
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [5.2, 52.6]
+                }
+              }  
+            ]
+          }
+        });
+
+        map.addLayer({
+          'id': 'layerid',
+          'type': 'fill',
+          'source': {
+            'type': 'geojson',
+            'data': json_data
+          },
+          'paint': {
+            'fill-color': '#888888',
+            'fill-opacity': 0.4
+          },
+        });
+
+        map.addLayer({
+          'id': 'wedstrijdgebied',
+          'type': 'fill',
+          'source': 'markermeer',
+          'paint': {
+            'fill-color': '#888888',
+            'fill-opacity': 0.4
+          },
+          'filter': ['==', '$type', 'Polygon']
+          });
+ 
+        map.addLayer({
+          'id': 'boeien',
+          'type': 'circle',
+          'source': 'markermeer',
+          'paint': {
+            'circle-radius': 6,
+            'circle-color': '#B42222'
+          },
+          'filter': ['==', '$type', 'Point']
+          });
+      });
+
+      // Set options
+      var markertje = new mapboxgl.Marker({
+        color: "#FFFFFF",
+        draggable: true
+      })
+      .setLngLat([4.5, 52.5])
+      .addTo(map);
+
+      // add markers to map
+      geojsontest.features.forEach(function(marker) {
+
+      // create a HTML element for each feature
+      var el = document.createElement('div');
+      el.className = 'marker';
+
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+        .addTo(map);
+      });
+
+      // Add zoom and rotation controls to the map.
+      map.addControl(new mapboxgl.NavigationControl());
+
+    </script>
+    <br>
+  </div>
+{% endblock content %}

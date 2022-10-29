@@ -1,0 +1,50 @@
+<!-- events/templates/events/edit_event.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  {% if user.is_authenticated %}
+    {% if user == event.manager or user.is_superuser %}
+      <!-- ***** Breadcrumb Area Start ***** -->
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all_events' %}">Events</a> / {{ title }}
+          </div>
+          <hr>
+        </div>
+        <h2>{{ title }} {{ event.name }}</h2>
+      </div>
+      <!-- ***** Breadcrumb Area End ***** -->
+      <div class="container">
+        {% if submitted %}
+        succesfully submitted
+        {% else %}
+          <div class="col-md-6 offset-md-3">
+            <form action="" method=POST>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <input type="submit" value="Update" class="btn btn-secondary">
+            </form>
+          </div>
+          <br>
+          <a href="{% url 'all_events' %}" class="btn btn-secondary">Cancel</a>
+          <br>
+        {% endif %}
+        <br>
+      </div>
+    {% else %}
+      <h2> Access Denied</h2>
+      <p> Only the event's manager can update an event...
+      <br>
+      Logged in User: {{ user }}
+      <br>
+      Eventmanager: {{ event.manager }}
+      </p>
+    {% endif %}
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan. Hiervoor moet u ingelogd zijn!</h3>
+    <a href="{% url 'login' %}?next={{request.path}}">Login here</a>
+  {% endif %}
+{% endblock content %}

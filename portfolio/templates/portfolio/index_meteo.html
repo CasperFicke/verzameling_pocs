@@ -1,0 +1,49 @@
+<!-- portfolio/templates/portfolio/index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'portfolio/styles/main.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  <div class="container">
+    <h2>{{title}}</h2>
+    <br><br>
+    <div class="row">
+      <div class="col-md-3">
+        <div id="profile-wrapper" class="card card-body border-info h-100">
+          <img id="profile-pic" src="{% static 'portfolio/images/standard.jpg' %}">
+          <hr>
+          <h4>Casper</h4>
+          <p>Zeiler</p>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card card-body border-info h-50">
+          <h4>getij-gegevens</h4>
+          <hr>
+          <form action="{% url 'portfolio:getij' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="lokatie" class="form-control mr-sm-2" type="search" placeholder="Lokatie" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+        <div class="card card-body border-info h-50">
+          <h4>Weerbericht</h4>
+          <hr>
+          <form action="{% url 'portfolio:weer' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="lokatie" class="form-control mr-sm-2" type="search" placeholder="Lokatie" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  <br>
+{% endblock content %}

@@ -1,0 +1,24 @@
+<!-- events/templates/events/kalender2.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" type="text/css" href="{% static 'events/styles/kalender.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / {{ title }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  {% include 'events/includes/kalender.html' %}
+{% endblock content %}

@@ -1,0 +1,24 @@
+<!-- energie/all_elecvtriciteit.html -->
+{% extends 'base.html' %}
+
+{% block title %} Electra {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'energie-index' %}"> Energie</a> / Electriciteit
+      </div>
+      <hr>
+    </div>
+    <h2>meterstanden electriciteit</h2>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <br/>
+    <div class="row align-items-center">  
+      <img src="data:image/png;base64,{{ data }}" alt="" height="100" ,width="250">
+      {% include 'includes/pagina_nav.html' %}
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,132 @@
+<!-- domeinen/templates/domeinen/show_certificaat.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} {{ title|title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-certificaten' %}"> Certificaten</a> / {{ certificaat.name }}
+      </div>
+      <hr/>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <strong>{{ certificaat.name }}</strong>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Certificaatgegevens:</h5>
+        <p class="card-text">
+          <ul>
+            <li>Type: {{ certificaat.type }} ({{ certificaat.type.description }})</li>
+            <li>Geldigheid van: {{ certificaat.start }}</li>
+            <li>Geldigheid tot: {{ certificaat.end }}{% include 'includes/vink_kruis.html' with bool_var=certificaat.valid %}</li>
+            <li>Opmerkingen: {{ certificaat.opmerkingen }}</li>
+          </ul>
+          <br>
+          <strong>Betrokkenen:</strong>
+          <table class="table table-sm table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 20%">Rol</th>
+                <th scope="col" style="width: 30%">Organisatie</th>
+                <th scope="col">Naam</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for betrokkene in certificaat.betrokkenen.all %}   
+                <tr>
+                  <td scope="row">{{ betrokkene.rol }}</td>
+                  <td><a href="{{ betrokkene.get_absolute_url }}">{{ betrokkene.organisatie }}</a></td>
+                  <td><a href="{{ betrokkene.get_absolute_url }}">{{ betrokkene.name }}</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <strong>Domeinen:</strong>
+          <table class="table table-sm table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 20%">Url</th>
+                <th scope="col">Beschrijving</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for domein in certificaat.domeinen.all %}   
+                <tr>
+                  <td scope="row"><a href="{{ domein.get_absolute_url }}">{{ domein.url }}</a></td>
+                  <td>{{ domein.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <strong>Subdomeinen:</strong>
+          <table class="table table-sm table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 20%">Url</th>
+                <th scope="col" style="width: 30%">hoofddomein</th>
+                <th scope="col">Beschrijving</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for subdomein in certificaat.subdomeinen.all %}   
+                <tr>
+                  <td scope="row"><a href="{{ subdomein.get_absolute_url }}">{{ subdomein.url }}</a></td>
+                  <td>{{ subdomein.domein.url }}</td>
+                  <td>{{ subdomein.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <strong>Servers:</strong>
+          <table class="table table-sm table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 20%">Naam</th>
+                <th scope="col">Beschrijving</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for server in certificaat.servers.all %}   
+                <tr>
+                  <td scope="row"><a href="{{ server.get_absolute_url }}">{{ server.naam }}</a></td>
+                  <td>{{ server.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <strong>Services:</strong>
+          <table class="table table-sm table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 20%">Naam</th>
+                <th scope="col">Beschrijving</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in certificaat.services.all %}   
+                <tr>
+                  <td scope="row"><a href="{{ service.get_absolute_url }}">{{ service.naam }}</a></td>
+                  <td>{{ service.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+        </p>
+      </div>
+      <a href="{% url 'all-certificaten' %}" class="btn btn-secondary">Terug</a>
+    </div>
+    <br>
+  </div>
+{% endblock content %}

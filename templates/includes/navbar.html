@@ -1,0 +1,220 @@
+<!-- templates/includes/navbar.html -->
+
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Logo -->
+  <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+<!-- buttons -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <!-- Linkerkant van de Navbar -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Home </a>
+      </li>
+      <!-- Dental menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dental
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'about' %}">About us</a></li>
+          <li><a class="dropdown-item" href="{% url 'service' %}">Service</a></li>
+          <li><a class="dropdown-item" href="{% url 'pricing' %}">Pricing</a></li>
+          <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
+          <li><a class="dropdown-item" href="{% url 'blog-details' %}">Blog Details</a></li>
+          <li><a class="dropdown-item" href="{% url 'book_appointment' %}">Book Appointment</a></li>
+          <li><a class="dropdown-item" href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+      </li>
+      <!-- Events menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Events 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'all_venues' %}">Alle Venues</a></li>
+          <li><a class="dropdown-item" href="{% url 'all_events' %}">Alle Events</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'my_events' %}">My Events</a></li>
+            {% if user.is_superuser %}
+              <li><a class="dropdown-item" href="{% url 'event-approval' %}">Event approval</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="{% url 'add_venue' %}">Add Venue</a></li>
+            <li><a class="dropdown-item" href="{% url 'add_event' %}">Add Event</a></li>
+          {% endif %}
+          <li><a class="dropdown-item" href="{% url 'kalender' %}">Kalender</a></li>
+          <li><a class="dropdown-item" href="{% url 'agenda' %}">Deze Maand</a></li>
+          <li><a class="dropdown-item" href="{% url 'agenda' '2021' 'March' %}">Maart</a></li>
+          <li><a class="dropdown-item" href="{% url 'agenda' '2021' 'April' %}">April</a></li>
+        </ul>
+      </li>
+      <!-- Stock menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Stocks
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'all_stocks' %}">Alle Stocks</a></li>
+          <li><a class="dropdown-item" href="{% url 'stockvalues' %}">Stock values</a></li>
+        </ul>
+      </li>
+      <!-- Blog menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Blog
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'all-blogposts' %}">Alle Blogposts</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'add-blogpost' %}">Add Blogpost</a></li> 
+          {% endif %}
+          <li><a class="dropdown-item" href="{% url 'all-tags' %}">Alle Tags</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'add-tag' %}">Add Tag</a></li> 
+          {% endif %}
+        </ul>
+      </li>
+      <!-- Kaarten menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Geo</a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'maps:google-basis' %}">Google basis</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:google-route' %}">Google route</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:default_map' %}">Mapbox map</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:basiskaart' %}">Folium basiskaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:openlayerskaart' %}">Openlayerskaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:zwemkaart' %}">Zwemkaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:unemploymentkaart' %}">Unemploymentkaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:italy' %}">Italie</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:oefenkaart' %}">Oefenkaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'maps:heatmap' %}">Heatmap</a></li>
+          <li><a class="dropdown-item" href="{% url 'calculate-distance' %}">Afstand meten</a></li>
+          <li><a class="dropdown-item" href="{% url 'calculate-endpoint' %}">Endpoint bepalen</a></li>
+        </ul>
+      </li>
+      <!-- Rakken menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Rakken</a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'rakken:index-rakken' %}">Index</a></li>
+          <li><a class="dropdown-item" href="{% url 'rakken:all-waypoints' %}">Waypoints</a></li>
+          <li><a class="dropdown-item" href="{% url 'rakken:all-rakken' %}">Rakken</a></li>
+          <li><a class="dropdown-item" href="{% url 'rakken:rakkenkaart' %}">Rakken-kaart</a></li>
+          <li><a class="dropdown-item" href="{% url 'rakken:all-rakscore' %}">Rakscore</a></li>
+          <li><a class="dropdown-item" href="{% url 'rakken:rakscorekaart' %}">Rakscore-kaart</a></li>
+        </ul>
+      </li>
+      <!-- Datalab menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Datalab
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'datalab:index-datalab' %}">Datalab</a></li>
+          <li><a class="dropdown-item" href="{% url 'datalab:index-kadaster' %}">Kadaster</a></li>
+          <li><a class="dropdown-item" href="{% url 'datalab:all-layers-geoserver' %}">All Geoserver</a></li>
+          <li><a class="dropdown-item" href="{% url 'datalab:all-datasets-ckan' %}">All CKAN</a></li>
+        </ul>
+      </li>
+      <!-- Energie menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Energie 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'energie-index' %}">Energie</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-meterstanden' %}">Alle Meterstanden</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-meterstanden' 'gas' %}">Gas</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-meterstanden' 'water' %}">Water</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-meterstanden' 'zonnepanelen' %}">Zonnepanelen</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-electriciteit' %}">Electriciteit</a></li>
+        </ul>
+      </li>
+      <!-- Domeinen menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Domeinbeheer 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'domeinen-index' %}">Index</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-domeinen' %}">Alle Domeinen</a></li>
+          <li><a class="dropdown-item" href="{% url 'all-subdomeinen' %}">Alle Subdomeinen</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'all-certificaten' %}">Alle Certificaten</a></li>
+            <li><a class="dropdown-item" href="{% url 'all-contacten' %}">Alle Contacten</a></li>
+            <li><a class="dropdown-item" href="{% url 'all-servers' %}">Alle Servers</a></li>
+          {% endif %}
+        </ul>
+      </li>
+      <!-- Foto menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Fotos 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'all-photos' %}">Alle Fotos</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'add-photo' %}">Add Foto</a></li>
+          {% endif %}
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'all-verwerkingen' %}">Verwerkingen</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'index-meetups' %}">Meetups</a></li>
+       <!-- Portfolio menu -->
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Portfolio
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'portfolio:home-portfolio' %}">Static Portfolio</a></li>
+          <li><a class="dropdown-item" href="{% url 'portfolio:index-portfolio' %}">Dynamic Portfolio</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:index-meteo' %}">Meteo</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'index-store' %}">Store</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'upload-salesfile' %}">Upload sales</a></li>
+    </ul>
+
+    <!-- Rechterkant van de Navbar -->
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <!-- Usermanagement -->
+      {% if user.is_authenticated %}
+      <li class="nav-item dropdown dropstart">
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ user.username }}
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'edit_usersettings' %}">Edit Settings</a></li>
+          <li><a class="dropdown-item" href="{% url 'change_password' %}">Change password</a></li>
+          {% if user.userprofile.id %}
+                <a class="dropdown-item" href="{% url 'edit_profile' user.userprofile.id %}">Edit Profile</a>
+                <a class="dropdown-item" href="{% url 'show_profile' user.userprofile.id %}">Show Profile</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'create_profile' %}">Create Profile</a>
+              {% endif %}
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </li>              
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+      {% endif %}
+    </ul>
+    <div class="form-inline my-2 my-lg-0">    
+      <a href="{% url 'cart' %}">
+        <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+      </a>
+      <p id="cart-total">{{ cartItems }}</p>
+    </div>
+  </div>
+</nav>

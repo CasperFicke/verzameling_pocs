@@ -1,0 +1,69 @@
+<!-- events/templates/events/all_events.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <!-- Search field -->
+    <form class="d-flex" method="POST" action="{% url 'all_events' %}" autocomplete="off">
+      {% csrf_token %}
+      <input class="form-control me-2"
+        type="search"
+        placeholder="Search events"
+        aria-label="Search"
+        name="searched">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </form>
+    <br/>
+    {% for event in event_list %}
+      {% if event.approved %}
+        <div class="card">
+          <div class="card-header">
+            <strong><a href="{% url 'show_event' event.id event.slug %}">{{ event.name|title }}</a></strong>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Datum: {{ event.event_start }}</h5>
+            <p class="card-text">
+              <ul>
+                <li>Begint over {{ event.days_till }}</li>
+                <li>Timing: {{ event.timing|title }}</li>
+                <li>Venue: {{ event.venue.name|title }}</li>
+                <li>Venue website: {{ event.venue.website }}</li>
+                <li>Manager: {{ event.manager }}</li>
+                <li>Beschrijving: {{ event.description }}</li>
+                <li>Goedgekeurd: {{ event.approved }}</li>
+                <strong>Bezoekers</strong>
+                {% for attendee in event.attendees.all %}
+                  <li>{{ attendee.first_name }}</li>
+                {% endfor %}
+                <br/>
+              </ul>
+            </p>
+            <div class="card-footer text-muted">
+              {% if user.is_authenticated %}
+                {% if user == event.manager or user.is_superuser %}
+                  <a href="{% url 'edit_event' event.id event.slug %}" class="btn btn-outline-primary">Edit</a>
+                  <a href="{% url 'delete_event' event.id event.slug %}" class="btn btn-outline-danger">Delete</a>
+                {% endif %}
+                <a href="#" class="btn btn-primary">Signup</a>
+                {% else %}
+                  <a  href="{% url 'login' %}?next={{request.path}}">Login</a> to sign up for this event
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <br/>
+      {% endif %}
+    {% endfor %}
+    {% if user.is_authenticated %}
+      <a href="{% url 'add_event' %}" class="btn btn-primary">Add Event</a>
+    {% else %}
+    <a  href="{% url 'add_event' %}?next={{request.path}}">Login</a> to add events
+    {% endif %}
+    <br/><br/>
+  </div>
+{% endblock content %}

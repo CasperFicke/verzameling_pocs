@@ -1,0 +1,60 @@
+<!-- events/templates/events/search_venues.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <!-- Search field -->
+  <form class="d-flex" method="POST" action="{% url 'search_venues' %}" autocomplete="off">
+    {% csrf_token %}
+    <input class="form-control me-2"
+      type="search"
+      placeholder="Search venues"
+      aria-label="Search"
+      name="searched">
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </form>
+  <a href="{% url 'all_venues' %}" class="btn btn-secondary" >All</a>
+  <br><br>
+  {% if venues %}
+    {% if searched %}
+      <h4>Venues containing '{{ searched }}':</h4>
+    {% endif %}
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Website</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for venue in venues %}   
+          <tr>
+            <th scope="row"><a href="{% url 'show_venue' venue.uuid %}">{{ venue.name }}</a></th>
+            <td><a href="{{ venue.website }}">{{ venue.website }}</td>
+            {% if user.is_authenticated %}
+              <td><a href="{% url 'edit_venue' venue.uuid %}" class="btn btn-secondary" >Edit</a></td>
+              <td><a href="{% url 'delete_venue' venue.uuid %}" class="btn btn-secondary" >Delete</a></td>
+            {% else %}
+              <td>Not allowed</td>
+              <td>Not allowed</td>
+            {% endif %}
+          </tr>
+        {% endfor %}  
+      </tbody>
+    </table>
+    {% if searched %}
+      number of matching venue(s): {{ venues_found }} of {{ venues_count }}
+    {% else %}
+        number of venue(s): {{ venues_count }}
+    {% endif %}
+  {% else %}
+    <h2>No venues found containing '{{ searched }}'</h2>
+  {% endif %}
+{% endblock content %}

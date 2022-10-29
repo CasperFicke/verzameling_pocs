@@ -1,0 +1,49 @@
+<!-- domeinen/templates/domeinen/edit_domein.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  {% if user.is_authenticated %}
+    {% if user.is_superuser %}
+      <!-- ***** Breadcrumb Area Start ***** -->
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-domeinen' %}">Domeinen</a> / {{ title }}
+          </div>
+          <hr>
+        </div>
+        <h2>{{ title }} {{ domein.url }}</h2>
+      </div>
+      <!-- ***** Breadcrumb Area End ***** -->
+      <div class="container">
+        {% if submitted %}
+        succesfully submitted
+        {% else %}
+          <div class="col-md-6 offset-md-3">
+            <form action="" method=POST>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <input type="submit" value="Update" class="btn btn-secondary">
+            </form>
+          </div>
+          <br>
+          <a href="{% url 'all-domeinen' %}" class="btn btn-secondary">Cancel</a>
+          <br>
+        {% endif %}
+        <br>
+      </div>
+    {% else %}
+      <h2> Access Denied</h2>
+      <p> Alleen de domein's manager kan een domein updaten...
+      <br>
+      Logged in User: {{ user }}
+      <br>
+      </p>
+    {% endif %}
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan. Hiervoor moet u ingelogd zijn!</h3>
+    <a href="{% url 'login' %}?next={{request.path}}">Login here</a>
+  {% endif %}
+{% endblock content %}

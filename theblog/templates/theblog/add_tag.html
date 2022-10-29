@@ -1,0 +1,25 @@
+<!-- theblog/templates/theblog/add_tag.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}  {{ title|title }} {% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  {% if user.is_authenticated %}
+    <div class="col-md-6 offset-md-3">
+      <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.media }}
+          {{ form.as_p }}
+          <button class="btn btn-secondary">Submit</button>
+        </form>
+        <br>
+        <a href="{% url 'all-tags' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+    </div>
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan. Hiervoor moet u ingelogd zijn!</h3>
+  {% endif %}
+{% endblock content %}

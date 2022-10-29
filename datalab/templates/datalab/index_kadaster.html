@@ -1,0 +1,58 @@
+<!-- datalab/templates/datalab/index_kadaster.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block css_files %}
+  
+{% endblock css_files %}
+
+{% block content %}
+  <div class="container">
+    <h2>{{title}}</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-body border-info h-30">
+          <h4>Niet natuurlijk persoon</h4>
+          <form action="{% url 'datalab:brk-nnp' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="nnp" class="form-control mr-sm-2" type="search" placeholder="id nnp" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+        <br>
+        <div class="card card-body border-info h-30">
+          <h4>Natuurlijk persoon</h4>
+          <form action="{% url 'datalab:brk-np' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="np" class="form-control mr-sm-2" type="search" placeholder="id np" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-body border-info h-30">
+          <h4>Zakelijk gerechtigde</h4>
+          <form action="{% url 'datalab:brk-zg' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="zg" class="form-control mr-sm-2" type="search" placeholder="id zg" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+        <br>
+        <div class="card card-body border-info h-30">
+          <h4>Onroerende zaak</h4>
+          <form action="{% url 'datalab:brk-oz' %}" class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            <input name="oz" class="form-control mr-sm-2" type="search" placeholder="id oz" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  <br>
+{% endblock content %}

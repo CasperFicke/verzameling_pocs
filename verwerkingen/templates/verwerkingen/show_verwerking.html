@@ -1,0 +1,71 @@
+<!-- verwerkingen/templates/verwerkingen/show_verwerking.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ verwerking.naam }}
+{% endblock title %}
+
+{% block content %}
+   <!-- ***** Breadcrumb Area Start ***** -->
+   <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-verwerkingen' %}"> Verwerkingen</a> / {{ verwerking.naam }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    Verwerking: {{ verwerking.naam }} <br>
+    Gemeente(n): 
+    {% for gemeente in verwerking.gemeente.all %}
+      {{ gemeente.naam }}, 
+    {% endfor %}
+    <br>
+    Verordening(en): 
+    {% for verordening in verwerking.verordening.all %}
+      {{ verordening.naam }}, 
+    {% endfor %}
+    <br>
+    Doel: {{ verwerking.doel }} <br>
+    Grondslag: {{ verwerking.grondslag }} <br>
+    Reden van grondslag: {{ verwerking.reden_grondslag }} <br>
+    Bewaartermijn: {{ verwerking.bewaartermijn }} <br>
+    Verantwoordelijke: {{ verwerking.verantwoordelijke }} <br>
+    Hoofdproces: {{ verwerking.hoofdproces }} <br>
+    Buiten EU gedeeld: {{ verwerking.buitenEUgedeeld }} <br>
+    DPIA uitgevoerd: {{ verwerking.dpia_uitgevoerd }} <br>      
+    <strong>Betrokkenen:</strong>
+    <table class="table table-sm table-bordered table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th >Betrokkene</th>
+          <th >verwerkte persoonsgegevens</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for betrokkene in verwerking.betrokkenen.all %}   
+          <tr>
+            <td scope="row">{{ betrokkene.naam }}</td>
+            <td>{% for persoonsgegeven in betrokkene.persoonsgegevens.all %}
+              {{ persoonsgegeven.type }}, 
+              {% endfor %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    Ontvangers: 
+    {% for ontvanger in verwerking.ontvangers.all %}
+      {{ ontvanger.naam }}, 
+    {% endfor %}
+    <br>
+    Verwerkersovereenkomst: 
+    {% for verwerkersovereenkomst in verwerking.verwerkersovereenkomsten.all %}
+      {{ verwerkersovereenkomst.naam }}, {{ verwerkersovereenkomst.verwerker }}, <a href="{{ verwerkersovereenkomst.pdf.url }}">download</a>, 
+    {% endfor %}
+    <br>
+  </div>
+{% endblock content %}

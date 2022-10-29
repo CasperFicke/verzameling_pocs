@@ -1,0 +1,83 @@
+<!-- domeinen/templates/domeinen/show_server.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} {{ title|title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-servers' %}"> Servers</a> / {{ server.naam }}
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <strong>Server: {{ server.naam }}</strong>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+        <p class="card-text">
+          <div class='row'>
+            <div class='col-md-6'>
+              <dl class="row">
+                <dt class="col-sm-4">Naam: </dt>
+                <dd class="col-sm-8">{{ server.naam }}</dd>
+                <dt class="col-sm-4">Beschrijving:</dt>
+                <dd class="col-sm-8">{{ server.description }}</dd>
+              </dl>
+            <a href="{% url 'all-servers' %}" class="btn btn-secondary">Terug</a>
+          </div>
+          <div class='col-md-6'>
+            <strong>Services:</strong>
+            <table class="table table-sm table-bordered table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Naam</th>
+                  <th scope="col">Beschrijving</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for service in server.services.all %}   
+                  <tr>
+                    <td><a href="{{ service.get_absolute_url }}">{{ service.naam }}</a></th>
+                    <th scope="row">{{ service.description }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <br>
+            <strong>Certificaten:</strong>
+            <table class="table table-sm table-bordered table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Naam</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Geldig</th>
+                  <th scope="col">Geldig tot</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for certificaat in server.certificaten.all %}   
+                  <tr>
+                    <th scope="row"><a href="{{ certificaat.get_absolute_url }}">{{ certificaat.name }}</th>
+                    <td><a href="{{ certificaat.get_absolute_url }}">{{ certificaat.type }}</a></td>
+                    <td>{% include 'includes/vink_kruis.html' with bool_var=certificaat.valid %}</a></td>
+                    <td>{{ certificaat.end }}</a></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <br>
+          </div>
+          <br>
+        </p>
+      </div>
+    </div>
+    <br>
+  </div>
+{% endblock content %}

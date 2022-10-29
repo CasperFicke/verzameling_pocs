@@ -1,0 +1,36 @@
+<!-- users/templates/users/edit_usersettings.html -->
+
+{% extends 'base.html' %} 
+{% block title %} Edit User Settings{% endblock %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <h2 class="title">Edit User Settings</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / Edit Settings
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="col-md-6 offset-md-3" >
+    <form method="POST" action="{% url 'edit_usersettings' %}">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <p>Your form has errors..</p>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          {% for field in form %}
+            {% if field.errors %}
+              {{ field.errors }}
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {{ form.as_p }}
+      <input type="submit" class="btn btn-secondary" value="Submit Changes">
+    </form>
+    <br><br>
+  </div>
+{% endblock %}

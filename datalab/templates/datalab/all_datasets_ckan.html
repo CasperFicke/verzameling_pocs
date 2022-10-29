@@ -1,0 +1,46 @@
+<!-- datalab/templates/datalab/all_datasets_ckan.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+<div class="container">
+  {% if api_result %}
+    {% if api_result == "Error..." %}
+      There was een error, please try again..
+    {% else %}
+      <div class="jumbotron teal">
+        <h1 class="display-5">CKAN datasets</h1>
+        <hr class="my-4">
+        <p>alle datasets in ckan productie</p>
+      </div>
+      <div class="container">
+        <table class="table table-striped table-sm table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if data_lijst %}
+            {% for dataset in data_lijst %}   
+                <tr>
+                  <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'show-dataset-ckan' dataset %}">View</a></th>
+                  <td>{{dataset }}</td>
+                </tr>
+              {% endfor %}  
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  {% endif %}
+  <a href="{% url 'index-datalab' %}" class="btn btn-sm btn-secondary">Terug</a>
+  <br>
+  <br>
+</div>
+
+{% endblock content %}

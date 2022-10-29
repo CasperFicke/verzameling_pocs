@@ -1,0 +1,20 @@
+<!-- theblog/templates/theblog/all_tags.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  {% for tag in tags %}
+      {{ tag.caption }} - {{ tag.description }}
+   <br>
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <a href="{% url 'add-tag' %}" class="btn btn-secondary" >Add tag</a>
+    <br><br>
+  {% else %}
+    <a href="{% url 'add-tag' %}" >Login</a> to add Tag</a>
+  {% endif %}
+  <br><br>
+{% endblock content %}

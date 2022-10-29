@@ -1,0 +1,27 @@
+<!-- events/templates/events/my_events.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all_events' %}"> Events</a>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <h2>My events</h2>
+    <ul>
+      {% for event in events %}
+        <li>{{ event.event_start }} - <a href="{% url 'show_event' event.id event.slug %}">{{ event.name }}</a> - {{ event.venue }}</li>
+        <br>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock content %}

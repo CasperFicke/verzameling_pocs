@@ -1,0 +1,43 @@
+<!-- meetups/templates/meetups/show_meetup.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ meetup.title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'meetups/styles/meetups_base.css' %}">
+  <link rel="stylesheet" href="{% static 'meetups/styles/show_meetup.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  {% if meetup_found %}
+    {% include 'includes/breadcrumb.html' %}
+    <div class="container">
+      <main>
+        <article>
+          <img id="main-image" src="{{ meetup.image.url }}" alt="{{ title }}">
+          <section id="location">
+            <h2>Meetup Location</h2>
+            <address>This meetup takes place in <span>{{meetup.location.name}}</span> {{ meetup.location.adres }}</address>
+          </section>
+          <section id="details">
+            <h2>What's This Meetup About?</h2>
+            <p>{{ meetup.description }}</p>
+            <footer>
+              <p>Need more details? Please <a href="">contact the organizer</a> (but don't spam us ;-)).</p>
+            </footer>
+          </section>
+          <section id="registration">
+            <h2>Join Us!</h2>
+            FORM
+          </section>
+        </article>
+      </main>
+    </div>
+  {% else %}
+    <p> No meetup found</p>
+  {% endif %}
+  <a href="{% url 'all-meetups' %}" class="btn btn-secondary" >Back</a>
+  <br><br>
+{% endblock content %}

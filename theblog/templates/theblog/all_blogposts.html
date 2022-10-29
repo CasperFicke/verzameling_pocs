@@ -1,0 +1,54 @@
+<!-- theblog/templates/theblog/all_blogposts.html -->
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'theblog/styles/all_blogposts.css'%}">
+{% endblock css_files %}
+
+{% block script_files_head %}
+<script src="{% static 'theblog/scripts/search_blogpost.js' %}" defer></script>
+{% endblock script_files_head %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <!-- Search field -->
+  <div class="w-100 text-center">
+    <form id="search-form" autocomplete="off">
+      {% csrf_token %}
+      <input type="text" id="search-input" class="p-1 w-50 search" placeholder="Search blogposts">
+    </form>
+    <div id="results-box" class="results-card not-visible">
+    </div>
+  </div>
+  <br>
+  <section id='welkom'>
+    <header>
+      <img src="{% static 'theblog/images/casper.jpg' %}" alt="Plaatje van Casper"/>
+      <h2>Oefen Blog</h2>
+    </header>
+    <p>Blog over van alles en nog wat</p>
+  </section>
+  <section id="alle-posts">
+    <ul>
+      {% for blogpost in blogposts %}
+        {% include 'theblog/includes/blogpost.html' %}
+      {% endfor %}
+    </ul>
+  </section>
+  {% if user.is_authenticated %}
+    <a href="{% url 'add-blogpost' %}" class="btn btn-secondary">Add Blogpost</a>
+    <br><br>
+  {% else %}
+    <a href="{% url 'add-blogpost' %}" >Login</a> to add Blogpost.
+  {% endif %}
+  <section id="about">
+    <h3> What I do<h3>
+    <p>Druk bezig met het leren van Django</p>
+    <p>Wie weet kan ik daar wat mee in mijn werk!</p>
+  </section>
+{% endblock content %}

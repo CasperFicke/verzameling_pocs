@@ -1,0 +1,28 @@
+<!-- events/templates/events/agenda.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        {{ cal|safe }}
+        </br>
+        <h4> Events deze maand</h4>
+        {% if event_list %}
+          {% for event in event_list %}
+            {{ event.event_start }} - {{ event.name }}
+            </br>
+          {% endfor %}
+        {% else %}
+          Er staan geen events gepland voor {{ month }}
+          </br>
+        {% endif %}
+        </br>
+        {{ current_time }}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

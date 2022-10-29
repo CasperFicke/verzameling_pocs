@@ -1,0 +1,77 @@
+<!-- website/templates/contact.html -->
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="breadcumb-area bg-img bg-gradient-overlay">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+          <h2 class="title">{{ title }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="breadcumb--con">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <!-- ***** Contact Area Start *****<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2420.4613734082295!2d5.109281589753716!3d52.65164361090719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1snl!2snl!4v1599647539372!5m2!1snl!2snl" -->
+  <section class="dento-contact-area mt-50 mb-100">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="google-maps mb-100">
+            <iframe src="https://datalab.purmerend.nl/atlas/embed/@126788.66003626067,505908.53068741615,13z/layers=id_his_beemster_erfgoedkaart" width="560" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Contact Information -->
+        <div class="col-12 col-md-4">
+          <div class="contact-information">
+            <h5>Adres</h5>
+            <p>Mijnstraat 120, 1234 AB Mijnplaats, NL</p>
+            <h5>Postbus</h5>
+            <p>1234 AB Mijnplaats, NL</p>
+            <h5>Telefoon</h5>
+            <p>+31 (0)123 - 456 789</p>
+            <h5>Email</h5>
+            <p class="mb-0">info@mijnsite.nl</p>
+          </div>
+        </div>
+        <!-- Contact Form -->
+        <div class="col-12 col-md-8">
+          <div class="contact-form">
+            <!-- Section Heading -->
+            <div class="section-heading">
+              <h2>Stuur ons een bericht</h2>
+            </div>
+            <!-- Form -->
+            <form action="{% url 'contact' %}" method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn dento-btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ***** Contact Area End ***** -->
+{% endblock content %}

@@ -1,0 +1,22 @@
+<!-- users/templates/users/create_profile.html -->
+
+{% extends 'base.html' %}
+{% block title %} Create Profile {% endblock title %}
+{% block content %}
+  {% if user.is_authenticated %}
+    <h1>Create Profile Page.. </h1>
+    <div class="form-group">
+      <form method="POST" enctype="multipart/form-data">
+        <!-- django commando om input token te maken -->
+        {% csrf_token %}
+        <!-- django shortcut om compleet formulier te maken --> 
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Create profile</button>
+      </form>
+    </div>
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan. Hiervoor moet u ingelogd zijn!</h3>
+  {% endif %}
+{% endblock content %}
+
+

@@ -1,0 +1,33 @@
+<!-- stocks/templates/stocks/edit_stock.html -->
+
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %} Edit stock {% endblock title %}
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all_stocks' %}"> stocks</a> / {{ item.ticker_name }} / edit</li>
+      </div>
+      <hr/>
+    </div>
+    <h2 class="title">Edit Stock</h2>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <br/>
+  {% if item %}
+    <form class="form-inline my-2 my-lg-0" method="POST">
+      {% csrf_token %}
+      <input name="ticker_name" class="form-control mr-sm-2" type="search"
+        placeholder="{{ item.ticker_name }}" value="{{ item.ticker_name }}" aria-label="Search">
+      <input name="ticker_description" class="form-control mr-sm-2" type="search"
+        placeholder="{{ item.ticker_description }}" value="{{ item.ticker_description }}" aria-label="Search">
+      <input type="hidden" value="{{ item.completed }}" name="completed">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Update</button>
+      <br/>
+      <a href="{% url 'all_stocks' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  {% endif %}
+  <br/>
+{% endblock content %}

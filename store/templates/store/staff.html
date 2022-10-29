@@ -1,0 +1,80 @@
+<!-- store/templates/store/staff.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'store/styles/store_base.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  {% include 'store/includes/topside.html' %}
+  <!--Table-->
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-md-4"> 
+      </div>
+      <div class="col-md-8">
+        <table class="table bg-white">
+          <thead class="bg-info">
+            <tr class="text-white">
+              <th scope="col"></th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Lastname</th>
+              <th scope="col">e-mail</th>
+              <th scope="col">Super</th>
+              <th scope="col">Staff</th>
+              <th scope="col">active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in staff %}
+              <tr>
+                <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'show_profile' user.id %}">View</a></th>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td><a href="mailto:{{ user.email }}" >{{ user.email }}</a></td>
+                <td>
+                  {% if user.is_superuser == True %}
+                  <span style="font-size: 24px; color: green;">
+                    <i class="fas fa-check"></i>
+                  </span>
+                  {% else %}
+                    <span style="font-size: 24px; color: red;">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if user.is_staff == True %}
+                  <span style="font-size: 24px; color: green;">
+                    <i class="fas fa-check"></i>
+                  </span>
+                  {% else %}
+                    <span style="font-size: 24px; color: red;">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if user.is_active == True %}
+                  <span style="font-size: 24px; color: green;">
+                    <i class="fas fa-check"></i>
+                  </span>
+                  {% else %}
+                    <span style="font-size: 24px; color: red;">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

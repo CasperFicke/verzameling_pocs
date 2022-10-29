@@ -1,0 +1,112 @@
+<!-- portfolio/templates/portfolio/index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'portfolio/styles/main.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  <div class="container">
+    <h2>home portfolio</h2>
+    <br><br>
+    <div class="row">
+      <div class="col-md-3">
+        <div id="profile-wrapper" class="card card-body border-info h-100">
+          <img id="profile-pic" src="{% static 'portfolio/images/standard.jpg' %}">
+          <hr>
+          <h4>Casper</h4>
+          <p>Coding architect</p>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card card-body border-info h-100">
+          <h4>Mijn werkzaamheden</h4>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ullamcorper dapibus nisl. In id dui. Nunc pulvinar erat et nibh.
+             Integer sollicitudin. Quisque faucibus. Sed eleifend sapien sed nunc. Pellentesque congue leo et felis eleifend scelerisque. 
+             In a mauris ultricies diam tincidunt pharetra. Etiam venenatis facilisis orci. Donec quam dui, mattis eu, posuere a, tristique ut,
+              pede. Sed quis nibh. Praesent augue metus, dapibus ac, consectetuer a, convallis eu, elit. Etiam et dui.
+          </p>
+          <p>
+            Cras tempus, tellus quis facilisis dignissim, lorem libero rhoncus dolor, in venenatis neque arcu a mauris. Vivamus arcu quam,
+             egestas sed, tempor quis, imperdiet sit amet, justo. Aliquam sem ipsum, sagittis id, imperdiet eu, scelerisque non, lorem. 
+             Cras aliquet, augue gravida iaculis tincidunt, elit sapien egestas libero, in dictum ipsum velit vel orci. Etiam mi nulla, 
+             lacinia nec, pretium vitae, blandit vel, tortor. Praesent eget libero. In accumsan laoreet lacus. Vivamus enim.
+          </p>
+          <ul class="social-links">
+            <li>
+              <a href="https://facebook.com" target="_blank" rel="noopener"><i class="fab fa-facebook social"></i></a>
+            </li>
+            <li>
+              <a href="https://twitter.com" target="_blank" rel="noopener"><i class="fab fa-twitter social"></i></a>
+            </li>
+            <li>
+              <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin social"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-body">
+          <h4>Mijn Ervaring</h4>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ullamcorper dapibus nisl. In id dui. Nunc pulvinar erat et nibh.
+             Integer sollicitudin. Quisque faucibus. Sed eleifend sapien sed nunc. Pellentesque congue leo et felis eleifend scelerisque. 
+             In a mauris ultricies diam tincidunt pharetra. Etiam venenatis facilisis orci. Donec quam dui, mattis eu, posuere a, tristique ut,
+              pede. Sed quis nibh. Praesent augue metus, dapibus ac, consectetuer a, convallis eu, elit. Etiam et dui.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-body">
+          <h4>Mijn Expertise</h4>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ullamcorper dapibus nisl. In id dui. Nunc pulvinar erat et nibh.
+             Integer sollicitudin. Quisque faucibus. Sed eleifend sapien sed nunc. Pellentesque congue leo et felis eleifend scelerisque. 
+             In a mauris ultricies diam tincidunt pharetra. Etiam venenatis facilisis orci. Donec quam dui, mattis eu, posuere a, tristique ut,
+              pede. Sed quis nibh. Praesent augue metus, dapibus ac, consectetuer a, convallis eu, elit. Etiam et dui.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-body">
+          <h4>Mijn manier van werken</h4>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ullamcorper dapibus nisl. In id dui. Nunc pulvinar erat et nibh.
+             Integer sollicitudin. Quisque faucibus. Sed eleifend sapien sed nunc. Pellentesque congue leo et felis eleifend scelerisque. 
+             In a mauris ultricies diam tincidunt pharetra. Etiam venenatis facilisis orci. Donec quam dui, mattis eu, posuere a, tristique ut,
+              pede. Sed quis nibh. Praesent augue metus, dapibus ac, consectetuer a, convallis eu, elit. Etiam et dui.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-body">
+          <h4>Mijn doelen</h4>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ullamcorper dapibus nisl. In id dui. Nunc pulvinar erat et nibh.
+             Integer sollicitudin. Quisque faucibus. Sed eleifend sapien sed nunc. Pellentesque congue leo et felis eleifend scelerisque. 
+             In a mauris ultricies diam tincidunt pharetra. Etiam venenatis facilisis orci. Donec quam dui, mattis eu, posuere a, tristique ut,
+              pede. Sed quis nibh. Praesent augue metus, dapibus ac, consectetuer a, convallis eu, elit. Etiam et dui.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+{% endblock content %}

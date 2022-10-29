@@ -1,0 +1,24 @@
+<!-- maps/templates/maps/google_basis.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'maps/styles/google_main.css' %}"></link>
+{% endblock css_files%}
+
+{% block script_files_head %}
+  <script src="{% static 'maps/scripts/google_basis.js' %}"></script>
+{% endblock script_files_head %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="div-container">
+    <div id="map-route"></div>
+  </div>
+{% endblock content %}
+
+{% block script_files_bottom %}
+  <script src="https://maps.googleapis.com/maps/api/js?key={{google_api_key}}&callback=initMap&v=weekly"></script>
+  <script src="{% static 'maps/scripts/google_main.js' %}"></script>
+{% endblock script_files_bottom %}

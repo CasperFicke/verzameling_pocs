@@ -1,0 +1,75 @@
+<!-- domeinen/templates/domeinen/all_contacten.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title|title }}
+{% endblock title %}
+
+{% block content %}
+  <!-- breadcrumb -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-contacten' %}">{{ title }}</a>
+      </div>
+      <hr>
+    </div>
+    <h2>{{ title }}</h2>
+  </div>
+  <div class="container">
+     <!-- Search field -->
+     <form class="form-inline my-2 my-lg-0" autocomplete="off">
+      {% csrf_token %}
+      <input class="form-inline mr-sm-2"
+        type="search"
+        placeholder="Search contacten"
+        aria-label="Search"
+        name="searched">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Organisatie / Naam</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if contact_list %}
+         {% for contact in page_obj %}   
+            <tr>
+              <th scope="row"><a href="{{ contact.get_absolute_url }}">{{contact}}</a></th>
+              <td>{{ contact.rol }}</td>
+              {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                  <td><a href="{% url 'edit-contact' contact.uuid %}" class="btn btn-outline-secondary">Edit</a></td>
+                {% else %}
+                  <td>Not allowed</td>
+                {% endif %}
+                {% if user.is_superuser %}
+                  <td><a href="{% url 'delete-contact' contact.uuid %}" class="btn btn-outline-danger">Delete</a></td>
+                {% else %}
+                  <td>Not allowed</td>
+                {% endif %}
+              {% else %}
+                <td>Not allowed</td>
+                <td>Not allowed</td>
+              {% endif %}
+            </tr>
+          {% endfor %}  
+        {% endif %}
+      </tbody>
+    </table>
+    <br>
+    {% if user.is_authenticated %}
+      <a href="{% url 'add-contact' %}" class="btn btn-secondary">Add contact</a>
+    {% else %}
+      <a href="{% url 'add-contact' %}">Login</a> to add Contact
+    {% endif %}
+    <br>
+    {% include 'includes/pagina_nav.html' %}
+  </div>
+{% endblock content %}

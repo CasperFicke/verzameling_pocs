@@ -1,0 +1,35 @@
+<!-- maps/templates/maps/openlayerskaart.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'maps/libs/v6.12.0-dist/ol.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'maps/styles/openlayersmap.css'%}" type="text/css">
+{% endblock css_files %}
+
+{% block script_files_head %}
+  <script src="{% static 'maps/libs/v6.12.0-dist/ol.js' %}"></script>
+{% endblock script_files_head %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}  
+  <div class="container">
+    <div id="map" class="map"></div>
+    <div id="overlay_c" style="background-color: yellow; width: 10px; height: 10px; border-radius: 5px;"></div>
+    <div id="overlay_loc" style="background-color: white; border-radius: 10px; border: 1px solid black; padding: 5px 10px;"></div>
+    <input type="checkbox" id="visible" checked> Toggle Layer Visibility
+    <label>
+      Layer opacity
+      <input id="opacity-input" type="range" min="0" max="1" step="0.01" value="1" />
+      <span id="opacity-output"></span>
+    </label>
+    <br>
+  </div>
+{% endblock content %}
+
+{% block script_files_bottom %}
+  <script src="{% static 'maps/scripts/openlayersmap.js' %}" defer></script>
+{% endblock script_files_bottom %}

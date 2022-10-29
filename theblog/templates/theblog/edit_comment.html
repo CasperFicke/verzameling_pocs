@@ -1,0 +1,25 @@
+<!-- theblog/templates/theblog/edit_comment.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} Edit comment {% endblock title %}
+
+{% block content %}
+  {% if user.is_authenticated and comment.author.id == user.id %}
+    <div class="col-md-6 offset-md-3">
+      <h2>Edit Comment</h2>
+      <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.media }}
+          {{ form.as_p }}
+          <button class="btn btn-secondary">Update</button>
+          <a href="{% url 'all-blogposts' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+    <br>
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan.</h3>
+  {% endif %}
+{% endblock content %}

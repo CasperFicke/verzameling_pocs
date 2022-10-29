@@ -1,0 +1,75 @@
+<!-- domeinen/templates/domeinen/all_subdomeinen.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title|title }}
+{% endblock title %}
+
+{% block content %}
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a> / <a href="{% url 'all-domeinen' %}">Domeinen</a> / {{ title }}
+      </div>
+      <hr>
+    </div>
+    <h2>{{ title }} {{ domein.name }}</h2>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+  <div class="container">
+    <table class="table table-sm table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Url</th>
+          <th scope="col">Hoofddomein</th>
+          <th scope="col">betrokkenen</th>
+          <th scope="col">geldig</th>
+          <th scope="col">vervalt over</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if subdomein_list %}
+         {% for subdomein in page_obj %}   
+            <tr>
+              <th scope="row"><a href="{{ subdomein.get_absolute_url }}">{{ subdomein.url }}</a></th>
+              <td><a href="{{ subdomein.domein.get_absolute_url }}">{{ subdomein.domein }}</a></td>
+              <td>
+                {% for betrokkene in subdomein.betrokkenen.all %}
+                  <li>{{ betrokkene.rol }}: <a href="{% url 'show-contact' betrokkene.uuid  %}">{{ betrokkene.organisatie }}  -  {{ betrokkene.name }}</a></li>
+                {% endfor %}
+              </td>
+              <td>{% include 'includes/vink_kruis.html' with bool_var=subdomein.valid %}</td>
+              <td>
+                {% if subdomein.valid == True %}
+                  {{subdomein.days_till_expiration}}
+                {% else %}
+                  expired
+                {% endif %}
+              </td>
+              {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                  <td><a href="{% url 'edit-subdomein' subdomein.uuid subdomein.slug %}" class="btn btn-outline-secondary">Edit</a></td>
+                {% else %}
+                  <td>Not allowed</td>
+                {% endif %}
+                {% if user.is_superuser %}
+                  <td><a href="{% url 'delete-subdomein' subdomein.uuid subdomein.slug %}" class="btn btn-outline-danger">Delete</a></td>
+                {% else %}
+                  <td>Not allowed</td>
+                {% endif %}
+              {% else %}
+                <td>Not allowed</td>
+                <td>Not allowed</td>
+              {% endif %}
+            </tr>
+          {% endfor %}  
+        {% endif %}
+      </tbody>
+    </table>
+    {% include 'includes/pagina_nav.html' %}
+  </div>
+{% endblock content %}

@@ -1,0 +1,40 @@
+/* portfolio/static/portfolio/styles/main.css */
+
+body{
+  background-color: #f8f8f8!important;
+}
+
+#profile-wrapper {
+  text-align: center;
+}
+
+#profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  color: teal;
+}
+
+.social-links ul, li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.social {
+  width: 30px;
+  height: 20px;
+  font-size: x-large;
+}
+
+/* Getij */
+.good {background-color: #0C0;}
+.moderate {background-color: #FFFF00;}
+.usg {background-color: #FF9900;}
+.unhealthy {background-color: #FF0000;}
+.veryunhealthy {background-color: #990066;}
+.hazardous {background-color: #660000;}

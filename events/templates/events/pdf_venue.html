@@ -1,0 +1,26 @@
+<!-- events/templates/events/pdf_venue.html -->
+
+{% extends 'pdfbase.html' %}
+{% block title %} Venue {{ venue.name }} {% endblock title %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <strong>{{ venue.name }}</strong>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">adresgegevens:</h5>
+      <p class="card-text">
+        <ul>
+          <li>Naam: {{ venue.name }}</li>
+          <li>Adres: {{ venue.adres }}</li>
+          <li>Postcode, plaats: {{ venue.postcode }}, {{ venue.plaats }}</li>
+          <li>Telefoon: {{ venue.telefoon }}</li>
+          <li>Website: <a href="{{ venue.website }}">{{ venue.website }}</a></li>         
+          <br>
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

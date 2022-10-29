@@ -1,0 +1,59 @@
+<!-- store/templates/store/staff.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'store/styles/store_base.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  {% include 'store/includes/topside.html' %}
+   <!--Table-->
+   <div class="container">
+    <div class="row my-4">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-10">
+        <table class="table bg-white">
+          <thead class="bg-info">
+            <tr class="text-white">
+              <th scope="col"></th>
+              <th scope="col">Order_Id</th>
+              <th scope="col">orderdate</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Total</th>
+              <th scope="col">Complete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <th scope="row"><a class="btn btn-info btn-sm" href="">View</a></th>
+              <td scope="row">{{ order.transaction_id }}</td>
+              <td>{{ order.date_ordered }}</td>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.get_cart_total }}</td>
+              <td>
+                {% if order.complete == True %}
+                <span style="font-size: 24px; color: green;">
+                  <i class="fas fa-check"></i>
+                </span>
+                {% else %}
+                  <span style="font-size: 24px; color: red;">
+                    <i class="fas fa-times"></i>
+                  </span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--End Table-->
+{% endblock content %}

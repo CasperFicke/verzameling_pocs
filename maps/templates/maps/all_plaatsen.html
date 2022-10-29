@@ -1,0 +1,67 @@
+<!-- maps/templates/maps/all_plaatsen.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+ 
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <div class="row mt-4">
+      <h4>Metadata:</h4>
+      <ul>
+        <li>naam : {{ metadata.0.naam }}</li>
+        <li>beschrijving : {{ metadata.0.beschrijving }}</li>
+        <li>referentie : {{ metadata.0.referentie }}</li>
+        <li>beheerder : {{ metadata.0.beheerder }}</li>
+        <li>created : {{ metadata.0.created }}</li>
+        <li>updated : {{ metadata.0.updated }}</li>
+      </ul>
+      <br><br>
+      <p>
+        Metadata<br>
+        <a href="{% url 'maps:api-metadata-plaatsen' %}" target="_blank" rel="noopener" class="btn btn-outline-secondary">API metadata</a>
+      </p>
+      <p>
+        API<br>
+        <a href="{% url 'maps:api-all-plaatsen' %}" target="_blank" rel="noopener" class="btn btn-outline-secondary">Show API</a>
+      </p>
+      <p class="text-justify">
+        Alle beschikbare API urls en OAS <br>
+        <a href="{% url 'docs' %}" target="_blank" rel="noopener" class="btn btn-outline-secondary">API methods</a>
+      </p>
+      <p>
+        Download OAS<br>
+        <a href="{% url 'schema' %}" target="_blank" rel="noopener" class="btn btn-outline-secondary">API OAS</a>
+      </p>
+      <div class="col-md-2">
+        <table class="table table-striped table-sm table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">id</th>
+              <th scope="col">naam</th>
+              <th scope="col">aant_inw</th>
+              <th scope="col">latitude</th>
+              <th scope="col">longitude</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plaats in plaatsen %}
+              <tr>
+                <td></td>
+                <td>{{ plaats.id }}</td>
+                <td>{{ plaats.naam }}</td>
+                <td>{{ plaats.aant_inwoners }}</td>
+                <td>{{ plaats.latitude }}</td>
+                <td>{{ plaats.longitude }}</td>
+              <tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+  </div>
+{% endblock content %}

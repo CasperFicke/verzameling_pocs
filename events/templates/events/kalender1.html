@@ -1,0 +1,39 @@
+<!-- events/templates/events/kalender.html -->
+
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'events/styles/kalender.css'%}">
+{% endblock css_files %}
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>{{ title }}</title>
+     <!-- Favicon -->
+     <link rel="icon" href="{% static 'images/favicon.ico' %}">
+  </head>
+  <body>
+    {% include 'includes/navbar.html' %}
+    {% include 'includes/breadcrumb.html' %}
+    <div class="clearfix">
+      <a class="btn btn-info left" href="{% url 'kalender' %}?{{ prev_month }}"> Previous Month </a>
+      <a class="btn btn-info right" href="{% url 'kalender' %}?{{ next_month }}"> Next Month </a>
+      <a class="btn btn-info right" href="{% url 'add_event' %}"> New Event </a>
+    </div>
+    {{ calendar }}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"</script>
+
+  </body>
+</html>

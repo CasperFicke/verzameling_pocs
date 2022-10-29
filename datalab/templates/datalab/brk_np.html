@@ -1,0 +1,53 @@
+<!-- datalab/templates/datalab/brk_np.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  <div class="container">
+  {% if api_result %}
+    {% if api_result == "Error..." %}
+      There was een error, please try again..
+    {% else %}
+      <div class="jumbotron teal">
+        <h1 class="display-5">BRK bevraging Natuurlijk Persoon</h1>
+        <hr class="my-4">
+        {{ np }}
+        <hr class="my-4">
+        <p>Omschrijving: {{ np.omschrijving }}</p>
+        <p>Woonadres: {{ np.woonadres }}</p>
+        <p>Postadres: {{ np.postadres }}</p>
+        <p>kadastraalOnroerendeZaakIdentificaties: {{ np.kadastraalOnroerendeZaakIdentificaties }}</p>
+        {% if np.heeftPartnerschap %}
+          <p>Heeft partnerschap: {{ np.heeftPartnerschap }}</p>
+        {% endif %}
+        <p>Naam : {{ np.naam }}</p>
+        <p>geboorte gegevens: {{ np.geboorte }}</p>
+        {% if np.overlijden %}
+          <p>overlijden gegevens: {{ np.overlijden }}</p>
+        {% endif %}
+        <table class="table table-striped table-sm table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">zakelijkGerechtigden</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if zg_lijst %}
+            {% for zg in zg_lijst %}   
+                <tr>
+                  <td><a href="https://api.brk.kadaster.nl/esd-eto-apikey/bevragen/v1/{{zg.href }}">{{zg.href }}</a></td>
+                </tr>
+              {% endfor %}  
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  {% endif %}
+  <br>
+</div>
+<br>
+{% endblock content %}

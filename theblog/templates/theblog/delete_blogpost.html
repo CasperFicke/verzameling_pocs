@@ -1,0 +1,25 @@
+<!-- theblog/templates/theblog/delete_blogpost.html -->
+
+{% extends 'base.html' %}
+
+{% block title %} Delete blogpost {% endblock title %}
+
+{% block content %}  
+  {% if user.is_authenticated and blogpost.author.id == user.id %}
+    <h3>Delete: {{ blogpost.title }}</h3>
+    <br>
+    <div class="form-group">
+      <form method="POST">
+        <!-- django commando om input token te maken -->
+        {% csrf_token %}
+        <button class="btn btn-secondary">Delete</button>
+        <a class="btn btn-secondary" href="{% url 'all-blogposts' %}">Cancel</a>
+      </form>
+      <br>
+    </div>
+  {% else %}
+    <h3> Opvragen van deze pagina is niet toegestaan.</h3>
+  {% endif %}
+{% endblock content %}
+
+

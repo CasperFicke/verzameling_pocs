@@ -1,0 +1,38 @@
+<!-- maps/templates/maps/zwemkaart.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'maps/styles/maps.css'%}">
+{% endblock css_files %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  <div class="container">
+    <br>
+    <div class='row'>
+      <div class='col-md-6'>
+        <h3>zwemkaart 1</h3>
+        {{ m |safe }}
+      </div>
+      <div class='col-md-6'>
+        <h3>zwemkaart 2</h3>
+        {{ m |safe }}
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-6'>
+        <h3>zwemkaart 3</h3>
+        {{ m |safe }}
+      </div>
+      <div class='col-md-6'>
+        <h3>Erfgoed</h3>
+          <iframe src="https://datalab.purmerend.nl/atlas/embed/@126788.66003626067,505908.53068741615,13z/layers=id_his_beemster_erfgoedkaart" width="560" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+      </div>
+    </div>
+    <br>
+  </div>
+{% endblock content %}

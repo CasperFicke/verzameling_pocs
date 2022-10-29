@@ -1,0 +1,62 @@
+<!-- store/templates/store/staff.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|title }}{% endblock title %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'store/styles/store_base.css' %}">
+{% endblock css_files%}
+
+{% block content %}
+  {% include 'includes/breadcrumb.html' %}
+  {% include 'store/includes/topside.html' %}
+  <!--Table-->
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            Profile
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <span class="h4"> Profile Information</span> <a class="btn btn-info btn-sm float-right"
+                    href="">Edit</a>
+                  <hr>
+                  <table class="table bg-white table-borderless">
+                    <tbody>
+                        <tr>
+                          <th scope="row">Name</th>
+                          <td>Mark</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Email</th>
+                          <td>mark123@gmail.com</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Phone</th>
+                          <td>00992283833</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Address</th>
+                          <td>Dorpsstraat 21 Demostad</td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4">
+                  <img class="img-thumbnail" src="{% static 'store/images/standard.jpg' %}" alt="">
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End Table-->
+{% endblock content %}
