@@ -15,7 +15,7 @@ from events.admin import events_adminsite
 from domeinen.admin import domeinen_adminsite
 
 urlpatterns = [
-  # amin urls
+  # admin urls
   path('admin/', admin.site.urls),
   path('blogadmin/', blog_adminsite.urls),
   path('eventsadmin/', events_adminsite.urls),

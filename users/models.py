@@ -29,6 +29,10 @@ COUNTRIES = country_list
 
 # Userprofile model
 class UserProfile(models.Model):
+  class Meta:
+    verbose_name_plural = 'User profiles'
+    ordering = ["id"]
+  # attributes
   bio          = models.TextField(null=True, blank=True)
   profile_pic  = models.ImageField(default='images/profile/standard.jpg', null=True, blank=True, upload_to="images/profile/")
   country      = models.CharField(verbose_name="Country",max_length=100, null=True, blank=True, choices=COUNTRIES)
@@ -41,10 +45,6 @@ class UserProfile(models.Model):
   is_active    = models.BooleanField(default=True)
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the Userprofile was created or updated')
   updated      = models.DateTimeField(auto_now=True)
-
-  class Meta:
-    verbose_name_plural = 'User profiles'
-    ordering = ["id"]
 
   # functie om userprofile in de admin web-pagina te kunnen presenteren
   def __str__(self):

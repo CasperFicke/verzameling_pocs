@@ -149,35 +149,29 @@ class Rak(models.Model):
 
 # Rakscore-model
 class RakScore(models.Model):
-  waypoint1 = models.ForeignKey(Waypoint, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscoreswp1')
-  waypoint2 = models.ForeignKey(Waypoint, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscoreswp2')
+  class Meta:
+    verbose_name_plural = 'rakscores'
+  # attributes
   bearing   = models.FloatField('bearing', blank=True, null=True)
   twa       = models.FloatField('twa', blank=True, null=True)
   score     = models.TextField('score', blank=True, null=True)
   color     = models.TextField('kleurscore', blank=True, null=True)
-  #twa21   = models.FloatField('twa van waypoint2 naar waypoint1', blank=True, null=True)
-  #score21 = models.TextField('score van waypoint2 naar waypoint1', blank=True, null=True)
-  #color21 = models.TextField('kleurscore van waypoint2 naar waypoint1', blank=True, null=True)
   # relaties
-  weer    = models.ForeignKey(Weer, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscores')
-  rak     = models.ForeignKey(Rak, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscores')
+  waypoint1 = models.ForeignKey(Waypoint, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscoreswp1')
+  waypoint2 = models.ForeignKey(Waypoint, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscoreswp2')
+  weer      = models.ForeignKey(Weer, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscores')
+  rak       = models.ForeignKey(Rak, blank=True, null=True, on_delete=models.CASCADE, related_name='rakscores')
   # secundair
   uuid    = models.UUIDField(unique=True, editable=False, default=uuid.uuid4, help_text='Unique identifier (UUID4)')
   created = models.DateTimeField(auto_now_add=True, help_text='Date when the record was first registered in the system')
- 
-  class Meta:
-    verbose_name_plural = 'rakscores'
-
-  # functie om model in de admin web-pagina te kunnen presenteren
-  #def __str__(self):
-  #  return self.uuid
 
 # Baan model
 class Baan(models.Model):
+  class Meta:
+    verbose_name_plural = 'banen'
+  # attributes
   naam         = models.CharField('Naam van de baan', max_length=100)
   beschrijving = models.TextField('Beschrijving', blank=True)
-  #windkracht   = models.FloatField('windkracht (knt)', default=0)
-  #windrichting = models.PositiveIntegerField('windrichting', default=0)
   # relaties
   evenement    = models.ForeignKey(Evenement, blank=True, null=True, on_delete=models.CASCADE, related_name='banen')
   weer         = models.ForeignKey(Weer, blank=True, null=True, on_delete=models.CASCADE, related_name='banen')
@@ -188,15 +182,16 @@ class Baan(models.Model):
   end_at       = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the baan record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the baan was registered in the system')
 
-  class Meta:
-    verbose_name_plural = 'banen'
-
  # functie om model in de admin web-pagina te kunnen presenteren
   def __str__(self):
     return f'{self.naam} - windkracht: {self.weer.windkracht} - windrichting: {self.weer.windrichting}'
   
 # Boot model
-class Boot(models.Model):
+class Boot(models.Model): 
+  class Meta:
+    ordering = ['naam']
+    verbose_name_plural = 'boten'
+  # attributes
   naam         = models.CharField('Naam', max_length=255, help_text='Naam van de boot')
   model        = models.CharField('Model', blank=True, max_length=255, help_text='Model boot')
   toelichting  = models.TextField('Toelichting', blank=True, help_text='Toelichting bij deze boot')
@@ -206,11 +201,7 @@ class Boot(models.Model):
   start_at     = models.DateField('start at', auto_now=True, help_text='Start date of the boot record')
   end_at       = models.DateField('end at', blank=True, null=True, help_text='End date of the boot record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the boot was registered in the system')
- 
-  class Meta:
-    ordering = ['naam']
-    verbose_name_plural = 'boten'
-  
+
   def get_absolute_url(self):
     return reverse("rakken:show-boot", args=[self.uuid])
 
@@ -220,6 +211,9 @@ class Boot(models.Model):
 
 # Polarpuntype model
 class PolarpuntType(models.Model):
+  class Meta:
+    verbose_name_plural = 'polarpunt types'
+  # attributes
   type         = models.CharField('Polarpunt Type', max_length=100)
   beschrijving = models.TextField('Beschrijving', blank=True)
   # secundair
@@ -228,15 +222,15 @@ class PolarpuntType(models.Model):
   end_at       = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the record was registered in the system')
 
-  class Meta:
-    verbose_name_plural = 'polarpunt types'
-
   # functie om model in de admin web-pagina te kunnen presenteren
   def __str__(self):
     return self.type
 
 # Polarpunt model
 class Polarpunt(models.Model):
+  class Meta:
+    verbose_name_plural = 'polarpunten'
+  # attributes
   windspeed  = models.PositiveIntegerField('windspeed')
   twa        = models.FloatField('ware windhoek', default=0)
   boatspeed  = models.FloatField('predicted boatspeed', blank=True, null=True)
@@ -250,9 +244,6 @@ class Polarpunt(models.Model):
   end_at     = models.DateField('end at', blank=True, null=True, help_text='End date of the record')
   created    = models.DateTimeField(auto_now_add=True, help_text='Date when the record was registered in the system')
  
-  class Meta:
-    verbose_name_plural = 'polarpunten'
-
   # functie om model in de admin web-pagina te kunnen presenteren
   def __str__(self):
     return f'{self.boot.naam} - tws: {self.windspeed} - twa: {self.twa} - boatspeed: {self.boatspeed}'

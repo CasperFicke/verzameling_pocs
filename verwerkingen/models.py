@@ -10,8 +10,8 @@ from django.urls import reverse
 class Gemeente(models.Model):
   naam = models.CharField('gemeente-naam', max_length=100)
   class Meta:
-    ordering = ['naam']
     verbose_name_plural = 'gemeenten'
+    ordering            = ['naam']
   # functie om model in de admin web-pagina te kunnen presenteren
   def __str__(self):
     return self.naam
@@ -21,8 +21,8 @@ class Verordening(models.Model):
   naam         = models.CharField('verordening-naam', max_length=100)
   beschrijving = models.CharField('beschrijving', max_length=200, blank=True)
   class Meta:
-    ordering = ['naam']
     verbose_name_plural = 'verordeningen'
+    ordering            = ['naam']
   # functie om model in de admin web-pagina te kunnen presenteren
   def __str__(self):
     return self.naam

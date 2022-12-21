@@ -15,9 +15,9 @@ def get_ip_address(request):
 
 # get geo data voor een IP adres
 def get_geo(ip):
-  g = GeoIP2()
-  country = g.country(ip)
-  city = g.city(ip)
+  g        = GeoIP2()
+  country  = g.country(ip)
+  city     = g.city(ip)
   lat, lon = g.lat_lon(ip)
   return country, city, lat, lon
 

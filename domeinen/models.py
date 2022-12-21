@@ -14,15 +14,15 @@ from django.utils.text import slugify
 from datetime import date
 
 # Server model
-class Server(models.Model):
+class Server(models.Model): 
+  class Meta:
+    ordering = ['naam']
+  # attributes
   naam        = models.CharField('Servernaam', max_length=100)
   description = models.TextField('Beschrijving', blank=True)
   # secundair
   uuid        = models.UUIDField(unique=True, default=uuid.uuid4, help_text='Unique identifier (UUID4)')
-  
-  class Meta:
-    ordering = ['naam']
-  
+ 
   def get_absolute_url(self):
     return reverse("show-server", args=[self.uuid])
   
@@ -32,15 +32,15 @@ class Server(models.Model):
 
 # Service model
 class Service(models.Model):
+  class Meta:
+    ordering = ['naam', 'server']
+  # attributes
   naam        = models.CharField('Servicenaam', max_length=100)
   description = models.TextField('Beschrijving', blank=True)
   # relaties
   server      = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='services')
   # secundair
   uuid        = models.UUIDField(unique=True, default=uuid.uuid4, help_text='Unique identifier (UUID4)')
-  
-  class Meta:
-    ordering = ['naam', 'server']
   
   def get_absolute_url(self):
     return reverse("show-service", args=[self.uuid])
@@ -51,6 +51,9 @@ class Service(models.Model):
 
 # Rol model
 class Rol(models.Model):
+  class Meta:
+    verbose_name_plural = 'rollen'
+  # attributes
   rol         = models.CharField('Contact Rol', max_length=100)
   description = models.TextField('Beschrijving', blank=True)
   # secundair
@@ -58,9 +61,6 @@ class Rol(models.Model):
   start_at    = models.DateField('start at', auto_now=True, help_text='Start date of the rol record')
   end_at      = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the rol record')
   created     = models.DateTimeField(auto_now_add=True, help_text='Date when the rol was registered in the system')
-
-  class Meta:
-    verbose_name_plural = 'rollen'
 
   # create absolute url to show rol
   def get_absolute_url(self):
@@ -72,6 +72,9 @@ class Rol(models.Model):
 
 # Contact model
 class Contact(models.Model):
+  class Meta:
+    verbose_name_plural = 'Contacten'
+  # attributes
   organisatie = models.CharField('Organisatie', max_length=100) 
   name        = models.CharField('Contactpersoon', max_length=100)
   adres       = models.CharField('Adres', max_length=100, blank=True)
@@ -87,9 +90,6 @@ class Contact(models.Model):
   end_at      = models.DateField('end at', blank=True, null=True, help_text='End date of the contact record')
   created     = models.DateTimeField(auto_now_add=True, help_text='Date when the contact was registered in the system')
 
-  class Meta:
-    verbose_name_plural = 'Contacten'
-
   def get_absolute_url(self):
     return reverse("show-contact", args=[self.uuid])
 
@@ -99,6 +99,9 @@ class Contact(models.Model):
 
 # Domein model
 class Domein(models.Model):
+  class Meta:
+    verbose_name_plural = 'domeinen'
+  # attributes
   url          = models.URLField('URL (SLD.TLD)', max_length=100)
   website      = models.BooleanField('Website', default=True)
   description  = models.TextField('Beschrijving', blank=True)
@@ -122,9 +125,6 @@ class Domein(models.Model):
   end_at       = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the domein record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the Domein was registered in the system')
 
-  class Meta:
-    verbose_name_plural = 'domeinen'
-  
   # method om te bepalen of domein nog geldig is
   @property
   def valid(self):
@@ -158,6 +158,9 @@ class Domein(models.Model):
 
 # Subdomein model
 class Subdomein(models.Model):
+  class Meta:
+    verbose_name_plural = 'subdomeinen'
+  # attributes
   url          = models.CharField('Subdomain', max_length=100)
   website      = models.BooleanField('Website', default=True)
   description  = models.TextField('Toelichting', blank=True)
@@ -181,9 +184,6 @@ class Subdomein(models.Model):
   start_at     = models.DateField('start at', auto_now=True, help_text='Start date of the subdomein record')
   end_at       = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the subdomein record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the Subdomein was registered in the system')
-
-  class Meta:
-    verbose_name_plural = 'subdomeinen'
 
   # method om te bepalen of subdomein nog geldig is
   @property
@@ -218,6 +218,7 @@ class Subdomein(models.Model):
 
 # Certificaattype model
 class Certificaattype(models.Model):
+  # attributes
   type        = models.CharField('Certificaat type', max_length=100)
   description = models.TextField('Beschrijving', blank=True)
   # secundair
@@ -229,6 +230,10 @@ class Certificaattype(models.Model):
 
 # Certificaat model
 class Certificaat(models.Model):
+  class Meta:
+    ordering = ['name']
+    verbose_name_plural = 'certificaten'
+  # attributes
   name         = models.CharField('Certificaatnaam', max_length=100)
   description  = models.TextField('Beschrijving', blank=True)
   opmerkingen  = models.TextField('Opmerkingen', blank=True)
@@ -247,10 +252,6 @@ class Certificaat(models.Model):
   end_at       = models.DateField('end at', editable=False, blank=True, null=True, help_text='End date of the certificaat record')
   created      = models.DateTimeField(auto_now_add=True, help_text='Date when the certificaat was registered in the system')
 
-  class Meta:
-    ordering = ['name']
-    verbose_name_plural = 'certificaten'
-  
   # method om te bepalen of certificaat nog geldig is
   @property
   def valid(self):
