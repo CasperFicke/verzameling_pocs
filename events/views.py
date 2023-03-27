@@ -103,9 +103,20 @@ def all_venues(request):
   title       = 'venues'
   venue_list  = Venue.objects.all().order_by('name')
   venue_count = venue_list.count()
+  submitted = False
+  if request.method == "POST":
+    form = VenueForm(request.POST, request.FILES)
+    if form.is_valid():
+      venue       = form.save(commit=False)
+      venue.owner = request.user.id
+      venue.save()
+  else:
+    form = VenueForm
+    if 'submitted' in request.GET:
+      submitted = True
  
   # Set up pagination
-  paginator    = Paginator(venue_list, 2) # Show 5 venues per page.
+  paginator    = Paginator(venue_list, 5) # Show 5 venues per page.
   page_number  = request.GET.get('page')
   venues_page  = paginator.get_page(page_number)
   page_count   = "a" * venues_page.paginator.num_pages
@@ -113,6 +124,8 @@ def all_venues(request):
 
   context  = {
     'title'        : title,
+    'form'         : form,
+    'submitted'    : submitted,
     'venue_list'   : venue_list,
     'aantal'       : venue_count,
     'page_obj'     : venues_page,
@@ -214,29 +227,6 @@ def show_venue(request, venue_uuid):
     return  render(request, 'events/show_venue.html', context)
   except:
     raise Http404()
-
-# add venue
-@login_required
-def add_venue(request):
-  title     = 'Add Venue'
-  submitted = False
-  if request.method == "POST":
-    form = VenueForm(request.POST, request.FILES)
-    if form.is_valid():
-      venue = form.save(commit=False)
-      venue.owner = request.user.id
-      venue.save()
-      return HttpResponseRedirect('/venues/add?submitted=True')
-  else:
-    form = VenueForm
-    if 'submitted' in request.GET:
-      submitted = True
-  context = {
-    'title'    : title,
-    'form'     : form,
-    'submitted': submitted
-  }
-  return render(request, 'events/add_venue.html', context)
 
 # Edit venue
 @login_required

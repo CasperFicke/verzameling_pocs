@@ -65,7 +65,7 @@
               </td>
               {% if user.is_authenticated %}
                 {% if user.id == domein.owner or user.is_superuser %}
-                  <td><a href="{% url 'edit-domein' domein.uuid domein.slug %}" class="btn btn-outline-secondary">Edit</a></td>
+                  <td><a href="{% url 'edit-domein' domein.uuid domein.slug %}?next={{request.get_full_path}}" class="btn btn-outline-secondary">Edit</a></td>
                 {% else %}
                   <td>Not allowed</td>
                 {% endif %}

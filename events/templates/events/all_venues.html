@@ -10,6 +10,8 @@
 
 {% block content %}
   {% include 'includes/breadcrumb.html' %}
+  <!-- Include -->
+  {% include 'events/add_venue.html' %}
   <div class="container">
     <!-- Search field -->
     <form class="d-flex" method="POST" action="{% url 'search_venues' %}" autocomplete="off">
@@ -46,7 +48,7 @@
               <td><a href="{{ venue.website }}">{{ venue.website }}</a></td>
               {% if user.is_authenticated %}
                 {% if user.id == venue.owner %}
-                  <td><a href="{% url 'edit_venue' venue.uuid %}" class="btn btn-outline-secondary">Edit</a></td>
+                  <td><a href="{% url 'edit_venue' venue.uuid %}?next={{request.get_full_path}}" class="btn btn-outline-secondary">Edit</a></td>
                 {% else %}
                   <td>Not allowed</td>
                 {% endif %}
@@ -68,8 +70,8 @@
     </table>
     <br>
     {% if user.is_authenticated %}
-      <br><br>
-      <a href="{% url 'add_venue' %}" class="btn btn-secondary" >Add venue</a>
+      <br>
+      <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal">Add venue</a>
     {% else %}
       <a href="{% url 'add_venue' %}?next={{request.path}}" >Login</a> to add Venue
     {% endif %}

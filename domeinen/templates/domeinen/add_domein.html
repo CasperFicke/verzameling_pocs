@@ -22,5 +22,6 @@
   {% else %}
     <h3> Opvragen van deze pagina is niet toegestaan. Hiervoor moet u ingelogd zijn!</h3>
     <a href="{% url 'login' %}?next={{request.path}}">Login here</a>
+    print (request.path)
   {% endif %}
 {% endblock content %}

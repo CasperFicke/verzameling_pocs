@@ -46,7 +46,7 @@
             <div class="card-footer text-muted">
               {% if user.is_authenticated %}
                 {% if user == event.manager or user.is_superuser %}
-                  <a href="{% url 'edit_event' event.id event.slug %}" class="btn btn-outline-primary">Edit</a>
+                  <a href="{% url 'edit_event' event.id event.slug %}?next={{request.get_full_path}}" class="btn btn-outline-primary">Edit</a>
                   <a href="{% url 'delete_event' event.id event.slug %}" class="btn btn-outline-danger">Delete</a>
                 {% endif %}
                 <a href="#" class="btn btn-primary">Signup</a>
