@@ -34,7 +34,7 @@ urlpatterns = [
   #path('', include('domeinen.urls')),
   path('', include('csvs.urls')),
   path('', include('measurements.urls')),
-  path('', include('verwerkingen.urls')),
+  #path('', include('verwerkingen.urls')),
   path('', include('meetups.urls')),
   path('', include('photos.urls')),
   path('', include('portfolio.urls')),

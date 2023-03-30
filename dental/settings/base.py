@@ -45,7 +45,6 @@ INSTALLED_APPS = [
   'csvs.apps.CsvsConfig',
   'sales.apps.SalesConfig',
   'measurements.apps.MeasurementsConfig',
-  'verwerkingen.apps.VerwerkingenConfig',
   'photos.apps.PhotosConfig',
   'meetups.apps.MeetupsConfig',
   'portfolio.apps.PortfolioConfig',
