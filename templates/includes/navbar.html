@@ -136,22 +136,6 @@
           <li><a class="dropdown-item" href="{% url 'all-electriciteit' %}">Electriciteit</a></li>
         </ul>
       </li>
-      <!-- Domeinen menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Domeinbeheer 
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <li><a class="dropdown-item" href="{% url 'domeinen-index' %}">Index</a></li>
-          <li><a class="dropdown-item" href="{% url 'all-domeinen' %}">Alle Domeinen</a></li>
-          <li><a class="dropdown-item" href="{% url 'all-subdomeinen' %}">Alle Subdomeinen</a></li>
-          {% if user.is_authenticated %}
-            <li><a class="dropdown-item" href="{% url 'all-certificaten' %}">Alle Certificaten</a></li>
-            <li><a class="dropdown-item" href="{% url 'all-contacten' %}">Alle Contacten</a></li>
-            <li><a class="dropdown-item" href="{% url 'all-servers' %}">Alle Servers</a></li>
-          {% endif %}
-        </ul>
-      </li>
       <!-- Foto menu -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -164,7 +148,6 @@
           {% endif %}
         </ul>
       </li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'all-verwerkingen' %}">Verwerkingen</a></li>
       <li class="nav-item"><a class="nav-link" href="{% url 'index-meetups' %}">Meetups</a></li>
        <!-- Portfolio menu -->
        <li class="nav-item dropdown">

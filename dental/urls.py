@@ -12,14 +12,14 @@ from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 # local
 from theblog.admin import blog_adminsite
 from events.admin import events_adminsite
-from domeinen.admin import domeinen_adminsite
+#from domeinen.admin import domeinen_adminsite
 
 urlpatterns = [
   # admin urls
   path('admin/', admin.site.urls),
   path('blogadmin/', blog_adminsite.urls),
   path('eventsadmin/', events_adminsite.urls),
-  path('domeinenadmin/', domeinen_adminsite.urls),
+  #path('domeinenadmin/', domeinen_adminsite.urls),
   
   # path(users/', include ('django.contrib.auth.urls')),
   
@@ -31,7 +31,7 @@ urlpatterns = [
   path('', include('events.urls')),
   path('', include('maps.urls', namespace="maps")),
   path('', include('energie.urls')),
-  path('', include('domeinen.urls')),
+  #path('', include('domeinen.urls')),
   path('', include('csvs.urls')),
   path('', include('measurements.urls')),
   path('', include('verwerkingen.urls')),

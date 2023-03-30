@@ -1,2 +1,0 @@
-# domeinen/utils.py
-
