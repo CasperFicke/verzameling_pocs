@@ -50,7 +50,6 @@ INSTALLED_APPS = [
   'portfolio.apps.PortfolioConfig',
   'store.apps.StoreConfig',
   'datalab.apps.DatalabConfig',
-  'rakken.apps.RakkenConfig',
   # support
   'crispy_forms',
   'import_export',

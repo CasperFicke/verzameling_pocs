@@ -31,16 +31,13 @@ urlpatterns = [
   path('', include('events.urls')),
   path('', include('maps.urls', namespace="maps")),
   path('', include('energie.urls')),
-  #path('', include('domeinen.urls')),
   path('', include('csvs.urls')),
   path('', include('measurements.urls')),
-  #path('', include('verwerkingen.urls')),
   path('', include('meetups.urls')),
   path('', include('photos.urls')),
   path('', include('portfolio.urls')),
   path('', include('store.urls')),
   path('', include('datalab.urls', namespace="datalab")),
-  path('', include('rakken.urls', namespace="rakken")),
   # django debug toolbar url
   path('__debug__/', include('debug_toolbar.urls')),
   # OAS urls
