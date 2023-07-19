@@ -46,8 +46,8 @@
             <div class="card-footer text-muted">
               {% if user.is_authenticated %}
                 {% if user == event.manager or user.is_superuser %}
-                  <a href="{% url 'edit_event' event.id event.slug %}?next={{request.get_full_path}}" class="btn btn-outline-primary">Edit</a>
-                  <a href="{% url 'delete_event' event.id event.slug %}" class="btn btn-outline-danger">Delete</a>
+                  <a href="{% url 'edit_event' event.id event.slug %}?next={{request.get_full_path}}" class="btn btn-outline-primary">Edit <i class="fas fa-edit"></i></a>
+                  <a href="{% url 'delete_event' event.id event.slug %}" class="btn btn-outline-danger">Delete <i class="fas fa-trash-alt"></i></a>
                 {% endif %}
                 <a href="#" class="btn btn-primary">Signup</a>
                 {% else %}
@@ -60,7 +60,7 @@
       {% endif %}
     {% endfor %}
     {% if user.is_authenticated %}
-      <a href="{% url 'add_event' %}" class="btn btn-primary">Add Event</a>
+      <a href="{% url 'add_event' %}" class="btn btn-primary">Add Event <i class="fas fa-solid fa-plus"></i></a>
     {% else %}
     <a  href="{% url 'add_event' %}?next={{request.path}}">Login</a> to add events
     {% endif %}

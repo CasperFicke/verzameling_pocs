@@ -48,20 +48,20 @@
               <td><a href="{{ venue.website }}">{{ venue.website }}</a></td>
               {% if user.is_authenticated %}
                 {% if user.id == venue.owner %}
-                  <td><a href="{% url 'edit_venue' venue.uuid %}?next={{request.get_full_path}}" class="btn btn-outline-secondary">Edit <i class="fas fa-edit"></i></a></td>
+                  <td><a href="{% url 'edit_venue' venue.uuid %}?next={{request.get_full_path}}" class="btn btn-outline-secondary"><i class="fas fa-edit"></i></a></td>
                 {% else %}
                   <td>Not allowed</td>
                 {% endif %}
                 {% if user.id == venue.owner %}
-                  <td><a href="{% url 'delete_venue' venue.uuid %}" class="btn btn-outline-danger">Delete <i class="fas fa-trash-alt"></i></a></td>
+                  <td><a href="{% url 'delete_venue' venue.uuid %}" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a></td>
                 {% else %}
                   <td>Not allowed</td>
                 {% endif %}
-                <td><a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-outline-primary">Pdf <i class="fas fa-file-pdf"></a></td>
+                <td><a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-outline-primary"><i class="fas fa-file-pdf"></a></td>
               {% else %}
                 <td>Not allowed</td>
                 <td>Not allowed</td>
-                <td><a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-outline-primary">Pdf</a></td>
+                <td><a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-outline-primary"><i class="fas fa-file-pdf"></a></td>
               {% endif %}
             </tr>
           {% endfor %}  
@@ -71,9 +71,9 @@
     <br>
     {% if user.is_authenticated %}
       <br>
-      <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal">Add venue</a>
+      <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal">Add venue <i class="fas fa-solid fa-plus"></i></a>
     {% else %}
-      <a href="{% url 'add_venue' %}?next={{request.path}}" >Login</a> to add Venue
+    <a href="{% url 'login' %}?next={{request.path}}" >Login</a> to add a Venue
     {% endif %}
     <br>
     {% include 'includes/pagina_nav.html' %}

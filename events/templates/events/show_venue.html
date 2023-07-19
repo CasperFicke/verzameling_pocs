@@ -72,10 +72,10 @@
     <br>
     <!-- manage venue actions -->
     {% if user.is_authenticated %}
-      <a href="{% url 'edit_venue' venue.uuid %}?next={{request.get_full_path}}" class="btn btn-secondary">Edit</a>
-      <a href="{% url 'delete_venue' venue.uuid %}" class="btn btn-secondary">Delete</a>
-      <a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-secondary">Pdf</a>
-      <a href="{% url 'qrcode-venue' venue.uuid %}" class="btn btn-secondary">QR code</a>
+      <a href="{% url 'edit_venue' venue.uuid %}?next={{request.get_full_path}}" class="btn btn-secondary">Edit <i class="fas fa-edit"></i></a>
+      <a href="{% url 'delete_venue' venue.uuid %}" class="btn btn-secondary">Delete <i class="fas fa-trash-alt"></i></a>
+      <a href="{% url 'pdf_venue' venue.uuid %}" class="btn btn-secondary">Pdf <i class="fas fa-file-pdf"></i></a>
+      <a href="{% url 'qrcode-venue' venue.uuid %}" class="btn btn-secondary">QR code <i class="fas fa-solid fa-qrcode"></i></a>
     {% endif %}
     <br><br>
   </div>

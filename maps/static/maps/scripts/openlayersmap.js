@@ -16,7 +16,7 @@ function init(){
     source: new ol.source.Stamen({layer: 'terrain-labels'})
   });
   // center, transforming to map projection
-  var center = ol.proj.transform([5.4, 51.8], 'EPSG:4326', 'EPSG:3857');
+  var center = ol.proj.transform([4.925, 52.525], 'EPSG:4326', 'EPSG:3857');
 
   // overlay for position of the center
   var overlay_c = new ol.Overlay({
