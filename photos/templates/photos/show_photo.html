@@ -21,19 +21,24 @@
       <li>Description: {{ photo.description }}</li>
       <li>created: {{ photo.created }}</li>
       <li><div style="width: 600px"><img src="{{ photo.image.url }}"></div></li>
+      <li>Size: {{ photo.image.size }}</li>
+      <li>Width: {{ photo.image.width }}</li>
+      <li>Height: {{ photo.image.height }}</li>
       <br>
     </ul>
-    <br><br>
+    <br>
+    <br>
     {% if is_favoriet %}
-      <p>This is my favorit photo</p>
+    <p>This is my favorit photo</p>
     {% else %}
-      <form action="/photos/favoriet/" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="photo_id" value="{{ photo.id }}">
-        <button class="btn btn-secondary">Favoriet</button>
-      </form>
+    <form action="/photos/favoriet/" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="photo_id" value="{{ photo.id }}">
+      <button class="btn btn-secondary">Favoriet</button>
+    </form>
     {% endif %}
     <br>
+    <a href="{% url 'delete-photo' photo.pk %}" class="btn btn-secondary">Delete</a>
     <a href="{% url 'all-photos' %}" class="btn btn-secondary">Terug</a>
     <br><br>
   </div>

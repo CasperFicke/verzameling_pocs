@@ -1,5 +1,6 @@
 # fotos/models.py
 
+from typing import Any
 from django.db import models
 from django.conf import settings
 from django.utils.html import mark_safe
@@ -18,3 +19,7 @@ class Photo(models.Model):
   def image_tag(self):
     if self.image != '':
       return mark_safe('<img src="%s%s" width="100" height="100" />' % (f'{settings.MEDIA_URL}', self.image))
+  # override delete method to also delete the image
+  def delete(self):
+    self.image.delete()
+    super().delete()

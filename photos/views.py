@@ -1,7 +1,7 @@
 # photos/views.py
 
 # Django
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import DetailView
 from django.contrib import messages
@@ -74,3 +74,11 @@ def add_photo(request):
     'form'  : form,
   }
   return render(request, 'photos/add_photo.html', context)
+
+# delete image
+def delete_photo(request, pk):
+  photo = get_object_or_404(Photo, pk=pk)
+  photo_name = photo.name
+  photo.delete()
+  messages.success(request, ("Photo " + photo_name + " has been deleted!"))
+  return redirect('all-photos')
